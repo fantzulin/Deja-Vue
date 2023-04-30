@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>過濾器</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <!--
+        過濾器:
+            定義: 對要顯示的數據進行特定格式化後再提示(適用於一些簡單邏輯的處理)
+            語法:
+                1. 註冊過濾器: Vue.filter(name, callback) 或 new Vue(filters:{})
+                2. 使用過濾器: {{ xxx | 過濾器名 }} 或 v-bind: 屬性 = "xxx | 過濾器名"
+            備註:
+                1. 過濾器也可以接收額外參數、多個過濾器也可以串聯
+                2. 並沒有改變原本的數據，是產生新的對應的數據
+    -->
+    <div id="root">
+        <h2>顯示格式化後的時間</h2>
+        <!-- 計算屬性實現 -->
+        <h3>現在是:{{ format_time }}</h3>
+        <!-- methods 實現 -->
+        <h3>現在是:{{ get_format_time() }}</h3>
+        <!-- 過濾器實現 -->
+        <h3>現在是:{{ time | time_formater }}</h3>
+        <!-- 過濾器實現(傳參) -->
+        <h3>現在是:{{ time | time_formater('YYYY-MM-DD') | my_slice }}</h3>
+        <h3 :x="msg | my_slice">cccccccccc</h3>
+    </div>
+    <div id="root2">
+        <h2>{{ msg | my_slice }}</h2>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    // 全局過濾器
+    Vue.filter('my_slice', function(value){
+        return value.slice(0, 4)
+    })
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            time: 1681893003952,
+            msg: 'hello, Chris'
+        },
+        computed:{
+            format_time(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        methods: {
+            get_format_time(){
+                return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+            }
+        },
+        // 局部的過濾器
+        filters:{
+            time_formater(value, str='YYYY年MM月DD日 HH:mm:ss'){
+                return dayjs(value).format(str)
+            }
+        }
+    })
+
+    const vm2 = new Vue({
+        el: '#root2',
+        data:{
+            msg: 'Chris wow'
+        }
+    })
+</script>
+</html>

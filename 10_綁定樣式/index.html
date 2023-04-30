@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綁定樣式</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        .basic {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000000;
+        }
+
+        .happy {
+            background-color: gold;
+        }
+
+        .sad {
+            background-color: dodgerblue;
+        }
+
+        .normal {
+            background-color: greenyellow;
+        }
+
+        .Chris1 {
+            color: crimson;
+        }
+
+        .Chris2 {
+            background-color: darkorange;
+        }
+
+        .Chris2 {
+            border: 2px solid gold;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        綁定樣式:
+            1. class 樣式
+                寫法: class="xxx" xxx 可以是字符串、對象、數組。
+                字符串寫法適用於: 類名不確定，要動態獲取。
+                對象寫法適用於: 要綁定多個樣式，個數不確定、名字也不確定。
+                數組寫法適用於: 要綁定多個樣式，個數確定、名字也確定，但不確定用不用。
+            2. style 樣式
+                :style="{ fontSize: xxx }" 其中 xxx 是動態值。
+                :style="[a, b]" 其中 a、b 是樣式對象。
+    -->
+    <div id="root">
+        <!-- 綁定 class 樣式，字符串寫法，適用於: 樣式的類名不確定，需要動態指定 -->
+        <div class="basic" :class="mood" @click="change_mood">{{ name }}</div>
+        <hr>
+        <!-- 綁定 class 樣式，數組寫法，適用於: 要綁定的樣式個數不確定、名字也不確定 -->
+        <div class="basic" :class="class_arr">{{ name }}</div>
+        <hr>
+        <!-- 綁定 class 樣式，對象寫法，適用於: 要綁定的樣式個數確定、名字也確定，但要動態決定用不用 -->
+        <div class="basic" :class="class_obj">{{ name }}</div>
+        <hr>
+        <!-- 綁定 style 樣式，對象寫法(少用) -->
+        <div class="basic" :style="style_obj">{{ name }}</div>
+        <hr>
+        <!-- 綁定 style 樣式，數組寫法(少用) -->
+        <div class="basic" :style="style_arr">{{ name }}</div>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris',
+            mood: 'normal',
+            class_arr: ['Chris1', 'Chris2', 'Chris3'],
+            class_obj: {
+                Chris1: false,
+                Chris2: false,
+            },
+            style_obj: {
+                fontSize: '40px'
+            },
+            style_obj2: {
+                backgroundColor: 'plum'
+            },
+            style_arr:[
+                {
+                    fontSize: '40px'
+                },
+                {
+                    backgroundColor: 'plum'
+                }
+            ]
+
+        },
+        methods: {
+            change_mood(){
+                const mood_list = ['happy', 'sad', 'normal']
+                const index = Math.floor(Math.random()*3)
+                this.mood = mood_list[index]
+            }
+        },
+    })
+</script>
+</html>

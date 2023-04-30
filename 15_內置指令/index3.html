@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-cloak 指令</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    
+</head>
+<body>
+    <!--
+        v-cloak 指令(沒有值):
+            1. 本質是一個特殊屬性，Vue 實例創建完畢並接管容器後，會刪掉 v-cloak 屬性。
+            2. 使用 css 配合 v-cloak 可以解決網速慢時頁面展示出 {{ xxx }} 的問題。
+    -->
+    <div id="root">
+        <h2 v-cloak>{{ name }}</h2>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris'
+        }
+        
+    })
+</script>
+</html>

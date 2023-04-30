@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>理解MVVM</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        el 與 el 的兩種寫法
+            1. M: 模型 (Model): data 中的數據
+            2. V: 視圖 (View): 模板代碼
+            3. VM: 視圖模型 (ViewModel): Vue 實例
+        觀察發現:
+            1. data 中所有的屬性，最後都出現出現在 vm 身上。
+            2. vm 身上所有的屬性及 Vue 原型上所有屬性，在 Vue 模板中都可以直接使用。
+        -->
+    <div id="root">
+        <h1>學校名稱: {{ name }}</h1>
+        <h1>學校地址: {{ address }}</h1>
+        <!-- <h1>測試一下1: {{ 1+1 }}</h1>
+        <h1>測試一下2: {{ $options }}</h1>
+        <h1>測試一下3: {{ $emit }}</h1>
+        <h1>測試一下4: {{ _c }}</h1> -->
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: 'Chris',
+            address: '台北市信義區'
+        }
+    })
+    console.log('vm:', vm);
+</script>
+</html>

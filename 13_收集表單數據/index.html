@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收集表單數據</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        div {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        收集表單數據:
+            若: <input type="text"/>，則 v-model 收集的是 value 值，用戶輸入的就是 value 值。
+            若: <input type="radio"/>，則 v-model 收集的是 value 值，且要給標籤配置 value 值。
+            若: <input type="checkbox"/>
+                1. 沒有配置 input 的 value 屬性，那麼收集的就是 checked (勾選 or 未勾選，是布爾值)
+                2. 配置 input 的 value 屬性:
+                    (1) v-model 的初始值是非數組，那麼收集的就是 checked (勾選 or 未勾選，是布爾值)
+                    (2) v-model 的初始值是數組，那麼收集的就是 value 組成的數組
+            備註: v-model 的三個修飾符:
+                lazy: 失去焦點再收集數據
+                number: 輸入字符串轉為有效的數字
+                trim: 輸入首尾空格過濾
+    -->
+    <div id="root">
+        <form @submit.prevent="not_refresh">
+            <div>
+                <label for="account">Account:</label>
+                <input type="text" id="account" v-model.trim="user_info.account">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" v-model="user_info.password">
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" id="age" v-model.number="user_info.age">
+            </div>
+            <div>
+                Gender:
+                <label for="mr">Mr</label>
+                <input type="radio" name="sex" id="mr" v-model="user_info.sex" value="mr">
+                <label for="ms">Ms</label>
+                <input type="radio" name="sex" id="ms" v-model="user_info.sex" value="ms">
+                <label for="other">Other</label>
+                <input type="radio" name="sex" id="other" v-model="user_info.sex" value="other">
+            </div>
+            <div>
+                Hobby:
+                <label for="food">Food</label>
+                <input type="checkbox" name="hobby" id="food" v-model="user_info.hobby" value="food">
+                <label for="fashion">Fashion</label>
+                <input type="checkbox" name="hobby" id="fashion" v-model="user_info.hobby" value="fashion">
+                <label for="travel">Travel</label>
+                <input type="checkbox" name="hobby" id="travel" v-model="user_info.hobby" value="travel">
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <select name="city" id="city" v-model="user_info.city">
+                    <option value="">choose one</option>
+                    <option value="taipei">Taipei</option>
+                    <option value="taichung">Taichung</option>
+                    <option value="tainan">Tainan</option>
+                </select>
+            </div>
+            <div>
+                <label for="note">Note:</label>
+                <textarea name="note" id="note" cols="30" rows="10" v-model.lazy="user_info.note"></textarea>
+            </div>
+            <div>
+                <input type="checkbox" name="readme" id="readme" v-model="user_info.agree">
+                <label for="readme">
+                    Please read and accept
+                    <a href="http://google.com" target="_blank">「License Agreements」</a>
+                </label>
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            user_info:{
+                account: '',
+                password: '',
+                age: '',
+                sex: 'other',
+                hobby: [],
+                city: 'taipei',
+                note: '',
+                agree: ''
+            }
+        },
+        methods: {
+            not_refresh(){
+                console.log(JSON.stringify(this.user_info))
+            }
+        },
+    })
+</script>
+</html>

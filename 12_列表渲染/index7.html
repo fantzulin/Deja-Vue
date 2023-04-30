@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模擬一格數據監測</title>
+    
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    let data = {
+        name: 'Chris',
+        address: 'Taipei'
+    }
+
+    // 創建一個監視的實例對象，用於監視 data 中屬性的變化
+    const obs = new Observer(data)
+    console.log(obs)
+
+    // 準備一個 vm 實例對象
+    let vm = {}
+    vm._data = data = obs
+
+    function Observer(obj) {
+        // 匯總對象中所有的屬性形成一個數組
+        const keys = Object.keys(obj)
+        // 遍歷
+        keys.forEach((k)=>{
+            Object.defineProperty(this, k, {
+                get() {
+                    return obj[k]
+                },
+                set(value) {
+                    console.log(`${k}被改了，我要去解析模板，生成虛擬DOM......我要開始忙了`)
+                    obj[k] = value
+                }
+
+            })
+        })
+    }
+</script>
+</html>

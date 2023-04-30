@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件修飾符</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        * {
+            margin: 10px;
+        }
+
+        .div-one {
+            height: 50px;
+            border: 1px solid #000000;
+        }
+
+        .div-box-one {
+            padding: 10px;
+            border: 1px solid red;
+        }
+
+        .div-box-two {
+            padding: 10px;
+            border: 1px solid gold;
+        }
+
+        .ul-list {
+            width: 200px;
+            height: 200px;
+            border: 1px solid blue;
+            overflow: auto;
+        }
+
+        li {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        Vue 中的事件修飾符
+            1. prevent: 阻止默認事件 (常用)
+            2. stop: 阻止事件冒泡 (常用)
+            3. once: 事件只觸發一次 (常用)
+            4. capture: 使用事件的捕獲模式
+            5. self: 只有 event.target 是當前操作的元素時才是觸發事件
+            6. passive: 事件的默認行為立即執行，無需等待事件回調執行完畢
+     -->
+
+    <div id="root">
+        <h2>歡迎來到{{ name }}園地</h2>
+        <!-- 阻止默認事件 (常用) -->
+        <a href="https://google.com" @click.prevent="show_info">提示訊息</a>
+
+        <!-- 阻止事件冒泡 (常用) -->
+        <div class="div-one" @click="show_info">
+            <button @click.stop="show_info">提示訊息</button>
+            <!-- 修飾符可以連續寫 -->
+            <!-- <a href="https://google.com" @click.stop.prevent="show_info">提示訊息</a> -->
+        </div>
+
+        <!-- 事件只觸發一次 (常用) -->
+        <button @click.once="show_info">提示訊息</button>
+
+        <!-- 使用事件的捕獲模式 -->
+        <div class="div-box-one" @click.capture="show_msg(1)">
+            div_box_one
+            <div class="div-box-two" @click="show_msg(2)">div_box_two</div>
+        </div>
+
+        <!-- 只有 event.target 是當前操作的元素時才是觸發事件 -->
+        <div class="div-one" @click.self="show_info">
+            <button @click="show_info">提示訊息</button>
+        </div>
+
+        <!-- 事件的默認行為立即執行，無需等待事件回調執行完畢 -->
+        <ul @wheel="scroll_event" class="ul-list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris'
+        },
+        methods: {
+            show_info(e){
+                // e.stopPropagation();
+                // console.log('click')
+                console.log(e.target)
+            },
+            show_msg(msg){
+                console.log(msg)
+            },
+            scroll_event(){
+                for (let i = 0; i < 1000; i++) {
+                    console.log("scroll")
+                }
+                console.log("too much")
+            }
+        },
+    })
+</script>
+</html>

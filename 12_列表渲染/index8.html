@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue set 的使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>學校訊息</h1>
+        <h2>學校名稱: {{ school.name }}</h2>
+        <h2>學校地址: {{ school.address }}</h2>
+        <h2>校長是: {{ school.leader }}</h2>
+        <hr>
+        <h1>學生訊息</h1>
+        <button @click="add_sex">添加性別</button>
+        <h2>姓名: {{ student.name }}</h2>
+        <h2 v-if="student.sex">性別: {{ student.sex }}</h2>
+        <h2>年齡: 真實{{ student.age.real_age }}，對外真實{{ student.age.fake_age }}</h2>
+        <h2>朋友們</h2>
+        <ul>
+            <li v-for="(f, index) in student.friends" :key="index">
+                {{ f.name }}-{{ f.age }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            school: {
+                name: 'Chris',
+                address: 'Taipei',
+            },
+            student: {
+                name: 'Amy',
+                age: {
+                    real_age: 29,
+                    fake_age: 18
+                },
+                friends:[
+                    {name: 'Bill', age: 30}
+                ]
+            }
+        },
+        methods: {
+            add_sex(){
+                // Vue.set(this.student, 'sex', 'Ms')
+                this.$set(this.student, 'sex', 'Ms')
+            }
+        },
+    })
+</script>
+</html>

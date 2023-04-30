@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>總結數據監視</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        Vue 監測數據的原理:
+            1. Vue 會監視 data 中所有層次的數據。
+
+            2. 如何監測對象中的數據?
+                通過 setter 實現監視，且要在 new Vue 時就傳入要監測的數據。
+                    (1). 對象中後追加的屬性，Vue 默認不做響應式處理
+                    (2). 如需給後添加的屬性做響應式，請使用如下 API:
+                        Vue.set(target, propertyName/index, value) 或
+                        vm.$set(target, propertyName/index, value)
+
+            3. 如何監測數組中的數據?
+                通過包裹數組更新元素的方法實現，本質就是做了兩件事:
+                    (1). 調用原生對應的方法對數組進行更新。
+                    (2). 重新解析模板，進而更新頁面。
+            
+            4. 在 Vue 修改數組中的某個元素一定要用如下方法:
+                1. 使用這些 API: push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+                2. Vue.set() 或 vm.$set()
+
+            特別注意: Vue.set() 和 vm.$set() 不能給 vm 或 vm 的根數據對象添加屬性!!!
+    -->
+    <div id="root">
+        <h1>學生訊息</h1>
+        <button @click="student.age++">年齡 + 1</button><br>
+        <button @click="add_sex">添加性別屬性，女</button><br>
+        <button @click="student.sex = '未知'">修改性別</button><br>
+        <button @click="add_friend">在列表首位添加一個朋友 Amy</button><br>
+        <button @click="update_first_friend_name">修改第一個朋友的名字為: Eva</button><br>
+        <button @click="add_hobby">添加一個愛好 travel</button><br>
+        <button @click="update_hobby">修改第一個愛好為: book</button><br>
+        <button @click="remove_coffee">過濾掉愛好中的 coffee</button><br>
+        <h2>姓名: {{ student.name }}</h2>
+        <h2>年齡: {{ student.age }}</h2>
+        <h2 v-if="student.sex">性別: {{ student.sex }}</h2>
+        <h2>愛好:</h2>
+        <ul>
+            <li v-for="(h, index) in student.hobby" :key="index">{{ h }}</li>
+        </ul>
+        <h2>朋友們</h2>
+        <ul>
+            <li v-for="(f, index) in student.friends" :key="index">
+                {{ f.name }}-{{ f.age }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            student: {
+                name: 'Chris',
+                age: 29,
+                hobby:['food', 'coffee', 'fashion'],
+                friends:[
+                    {name: 'Bill', age: 30},
+                    {name: 'Dora', age: 41},
+                ]
+            }
+        },
+        methods: {
+            add_sex(){
+                // Vue.set(this.student, 'sex', 'Ms')
+                this.$set(this.student, 'sex', 'Ms')
+            },
+            add_friend(){
+                this.student.friends.unshift({name: 'Amy', age: 18})
+            },
+            update_first_friend_name(){
+                this.student.friends[0].name = 'Eva'
+                this.student.friends[0].age = '5'
+            },
+            add_hobby(){
+                this.student.hobby.push('travel')
+            },
+            update_hobby(){
+                // this.student.hobby.splice(0, 1, 'book')
+                // Vue.set(this.student.hobby, 0, 'book')
+                this.$set(this.student.hobby, 0, 'book')
+            },
+            remove_coffee(){
+                this.student.hobby = this.student.hobby.filter((h)=>{
+                    return h !== 'coffee'
+                })
+            }
+        },
+    })
+</script>
+</html>

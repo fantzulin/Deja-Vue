@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 中的數據代理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        1. Vue 中的數據代理:
+            通過 vm 對象來代理 data 對象中屬性的操作 (讀 / 寫)
+        2. Vue 中數據代理的好處:
+            更加方便的操作 data 中的數據
+        3. 基本原理:
+            通過 Object.defineProperty() 把 data 對象中所有屬性添加到 vm 上。
+            為每一個添加到 vm 上的屬性，都指定一個 getter/setter。
+            在 getter/setter 內部去操作 (讀 / 寫) data 中對應的屬性。
+     -->
+
+    <div id="root">
+        <h2>學校: {{ name }}</h2>
+        <h2>地址: {{ address }}</h2>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris',
+            address: '台北市信義區',
+        },
+    })
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一個重要的內置關係</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+	<!--
+		1. 一個重要的內置關係：VueComponent.prototype.__proto__ === Vue.prototype
+		2. 為什麼要有這個關係：讓組件實例對象(vc)可以訪問到 Vue 原型上的屬性、方法。
+	-->
+	<div id="root">
+		<school></school>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.config.productionTip = false // 阻止 vue 初始化時產生提示
+	Vue.prototype.x = 99
+	// 定義 school 組件
+	const school = Vue.extend({
+		name: 'school',
+		template: `
+			<div>
+				<h2>學校名稱：{{ name }}</h2>
+				<h2>學校地址：{{ address }}</h2>
+				<button @click="show_x">輸出 x</button>
+			</div>
+		`,
+		data(){
+			return {
+				name: 'Chris',
+				address: 'Taipei'
+			}
+		},
+		methods:{
+			show_x(){
+				console.log(this.x)
+			}
+		}
+	})
+
+	// 創建一個 vm
+	const vm = new Vue({
+		el: '#root',
+		data:{
+			msg:'Hello'
+		},
+		components:{
+			school
+		}
+	})
+
+	console.log(school.prototype.__proto__ === Vue.prototype)
+
+	// 定義一個構造函數
+	/*function demo(){
+		this.a = 1
+		this.b = 2
+	}
+
+	const d = new demo()
+
+	console.log(demo.prototype) // 顯示原型屬性
+	console.log(d.__proto__) // 隱式原型屬性
+
+	console.log(demo.prototype === d.__proto__)
+
+	// 程序員通過顯示原型屬性操作原型對象，追加一個 x 屬性，值為 99
+	demo.prototype.x = 99
+
+	console.log("d", d)*/
+
+
+</script>
+</html>

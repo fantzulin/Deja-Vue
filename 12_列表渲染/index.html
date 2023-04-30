@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本列表</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        v-for 指令:
+            1. 用於展示列表數據
+            2. 語法: v-for="(item, index) in xxx" :key="yyy"
+            3. 可遍歷: 數組、對象、字符串(少用)、指定次數(少用)
+    -->
+    <div id="root">
+        <!-- 遍歷數組 -->
+        <h2>人員列表(遍歷數組)</h2>
+        <ul>
+            <li v-for="person in person_list" :key="person.id">
+                {{ person.name }}-{{ person.age }}
+            </li>
+        </ul>
+
+        <!-- 遍歷對象 -->
+        <h2>汽車列表(遍歷對象)</h2>
+        <ul>
+            <li v-for="(value, k) of car" :key="k">
+                {{ k }}-{{ value }}
+            </li>
+        </ul>
+
+        <!-- 遍歷字符串 -->
+        <h2>測試遍歷字符串(少用)</h2>
+        <ul>
+            <li v-for="(char, index) of str" :key="index">
+                {{ char }}-{{ index }}
+            </li>
+        </ul>
+
+        <!-- 遍歷指定次數 -->
+        <h2>測試遍歷指定次數(少用)</h2>
+        <ul>
+            <li v-for="(number, index) of 5" :key="index">
+                {{ index }}-{{ number }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            person_list: [
+                {id: '001', name: 'Chris', age: 29},
+                {id: '002', name: 'Amy', age: 30},
+                {id: '003', name: 'Dora', age: 31}
+            ],
+            car: {
+                name: 'Benz',
+                price: '100W',
+                type: 'A108'
+            },
+            str: 'Chris'
+
+        }
+    })
+</script>
+</html>

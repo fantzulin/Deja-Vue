@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 數據綁定</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        Vue 中有 2 種數據綁定的方式:
+            1. 單向綁定 (v-bind): 數據只能從 data 流向頁面
+            2. 雙向綁定 (v-model): 數據不僅能從 data 流向頁面，還可以從頁面流向 data。
+                備註:
+                    1. 雙向綁定一般都應用在表單類元素上 ( 如: input、select 等)
+                    2. v-model:value 可以簡寫為 v-model，因為 v-model 默認收集的就是 value 值。
+    -->
+    <div id="root">
+        <!-- 普通寫法 -->
+        <!-- 單向數據綁定: <input type="text" v-bind:value="msg"><br>
+        雙向數據綁定: <input type="text" v-model:value="msg"> -->
+
+        <!-- 簡寫 -->
+        單向數據綁定: <input type="text" :value="msg"><br>
+        雙向數據綁定: <input type="text" v-model="msg">
+
+        <!-- 如下程式是錯誤的，因為 v-model 只能應用在表單類元素(輸入類元素)上 -->
+        <!-- <h2 v-model:x="msg">Cool</h2> -->
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    new Vue({
+        el: '#root',
+        data: {
+            msg: 'Chris'
+        }
+    })
+</script>
+</html>

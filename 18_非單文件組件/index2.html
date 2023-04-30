@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幾個注意點</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        幾個注意點:
+            1. 關於組件名:
+                一個單詞組成:
+                    第一種寫法(首字母小寫): school
+                    第二種寫法(首字母大寫): School
+                多個單詞組成:
+                    第一種寫法(kebab-case 命名): my-school
+                    第二種寫法(Camelcase 命名): MySchool(需要 Vue 腳手架支持)
+                備註:
+                    (1). 組件名盡可能迴避 HTML 中已有的元素名稱，例如: h2, H2 都不行。
+                    (2). 可以使用 name 配置指定組件在開發者工具中呈現的名字。
+
+            2. 關於組件標籤:
+                第一種寫法: <school></school>
+                第二種寫法: <school/>
+                備註: 不用使用腳手架時，<school/> 會導致後續組件不能渲染。
+
+            3. 一個簡寫方式:
+                const school = Vue.extend(options) 可簡寫為 const school = options
+    -->
+    <div id="root">
+        <h1>{{ msg }}</h1>
+        <school></school>
+        <school/>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    // 定義組件
+    const school = Vue.extend({
+        name: 'scholl-content',
+        template: `
+        <div>
+            <h2>學校名稱: {{ name }}</h2>
+            <h2>學校地址: {{ address }}</h2>
+        </div>
+        `,
+        data(){
+            return {
+                name: 'Chris School',
+                address: 'Taipei'
+            }
+        },
+    })
+
+    // 定義簡寫的方式
+    const school2 = {
+        name: 'scholl-content',
+        template: `
+        <div>
+            <h2>學校名稱: {{ name }}</h2>
+            <h2>學校地址: {{ address }}</h2>
+        </div>
+        `,
+        data(){
+            return {
+                name: 'Chris School',
+                address: 'Taipei'
+            }
+        },
+    }
+
+    // 創建 vm
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            msg: '歡迎'
+        },
+        components:{
+            school
+        }
+    })
+
+</script>
+</html>

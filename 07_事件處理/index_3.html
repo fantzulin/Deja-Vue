@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鍵盤事件</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style></style>
+</head>
+<body>
+    <!-- 
+        1. Vue 中常用的案件別名:
+            Enter 鍵 => enter
+            刪除鍵 => delete (捕獲 "刪除" 和 "<-退格" 鍵)
+            Esc 鍵 => esc
+            空白鍵 => space
+            Tab 鍵 => tab (特殊，必須配合 keydown 去使用)
+            上 => up
+            下 => down
+            左 => left
+            右 => right
+
+        2. Vue 未提供別名的按鍵，可以使用按鍵原始的 key 值去綁定，但注意要轉為 kebab-case (小寫跟減號命名)
+
+        3. 系統修飾鍵 (用法特殊): ctrl、alt、shift、meta(win)
+            (1). 配合 keyup 使用: 按下修飾鍵的同時，再按下其他鍵，隨後釋放其他鍵，事件才被觸發。
+            (2). 配合 keydown 使用: 正常觸發事件。
+
+        4. 也可以使用 keyCode 去指定具體的按鍵 (不推薦)
+
+        5. Vue.config.keyCodes.自定義鍵名 = 鍵碼，可以去訂製鍵別名
+     -->
+
+    <div id="root">
+        <h2>歡迎來到{{ name }}園地</h2>
+        <input type="text" placeholder="按下 Enter 提示輸入" @keydown.enter="show_info">
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    Vue.config.keyCodes.hello = 13 // 定義了一個別名按鍵
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris'
+        },
+        methods: {
+            show_info(e){
+                console.log(e.target.value)
+            }
+        },
+    })
+</script>
+</html>

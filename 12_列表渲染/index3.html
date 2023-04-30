@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表過濾</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>人員列表</h2>
+        <input type="text" placeholder="請輸入名字" v-model="keyword">
+        <ul>
+            <li v-for="(person, index) of filter_persons" :key="person.id">
+                {{ person.name }}-{{ person.age }}-{{ person.sex }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    // 用 watch 實現
+    /*const vm = new Vue({
+        el: '#root',
+        data:{
+            keyword: '',
+            person_list: [
+                {id: '001', name: '王小明', age: 29, sex: 'Mr'},
+                {id: '002', name: '林小美', age: 30, sex: 'Ms'},
+                {id: '003', name: '林大旺', age: 31, sex: 'Mr'},
+                {id: '004', name: '陳福旺', age: 32, sex: 'Ms'}
+            ],
+            filter_persons: []
+        },
+        watch: {
+            keyword: {
+                immediate: true,
+                handler(value){
+                    this.filter_persons = this.person_list.filter((person)=>{
+                        return person.name.indexOf(value) !== -1
+                    })
+                }
+            }
+        }
+    })*/
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            keyword: '',
+            person_list: [
+                {id: '001', name: '王小明', age: 29, sex: 'Mr'},
+                {id: '002', name: '林小美', age: 30, sex: 'Ms'},
+                {id: '003', name: '林大旺', age: 31, sex: 'Mr'},
+                {id: '004', name: '陳福旺', age: 32, sex: 'Ms'}
+            ]
+        },
+        computed: {
+            filter_persons(value){
+                return this.person_list.filter((person)=>{
+                    return person.name.indexOf(this.keyword) !== -1
+                })
+            }
+        }
+    })
+</script>
+</html>

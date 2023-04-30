@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-pre 指令</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    
+</head>
+<body>
+    <!--
+        v-pre 指令:
+            1. 跳過其所在節點的編譯過程。
+            2. 可利用它跳過: 沒有使用指令語法、沒有使用插值語法的節點，會加快編譯。
+    -->
+    <div id="root">
+        <h2 v-pre>Vue 其實很簡單</h2>
+        <h2>當前的 n 值是:{{ n }}</h2>
+        <button @click="n++">n+1</button>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            n: 1
+        }
+        
+    })
+</script>
+</html>

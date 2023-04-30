@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My first Vue.js</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        first Vue:
+            1. 想讓 Vue 工作，就必須創建 Vue，且要傳入一個對象
+            2. root 容器裡的內容依然符合 html 規則，只是和 Vue 的語法混合使用
+            3. root 容器裡的內容被稱為 Vue 模板
+            4. Vue 和容器是一對一的
+            5. 真實開發中只有一個 Vue，並且會配合組件一起使用
+            6. {{ xxx }} 中的 xxx 要且 js 表達式，且 xxx 可以自動讀取到 data 中的所有屬性
+            7. 一旦 data 中的數據發生改變，那麼模板中用到該數據的地方也會自動更新
+
+            注意區分: js 表達式和 js 程式碼(語句)
+                1. 表達式: 一個表達式會產生一個值，可以放在任何一個需要值的地方
+                    (1). a
+                    (2). a + b
+                2. js 程式碼(語句)
+                    (1). if () {}
+                    (2). for () {}
+    -->
+    <div id="root">
+        <h1>Hello, {{ name.toUpperCase() }} , {{ title }}</h1>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    // create Vue
+    new Vue({
+        el: '#root', // el 用於指定目前 Vue 為該容器啟動，值通常為 css 選擇器字串
+        data: { // data 中用於存數據，數據提供 el 指定的容器去使用，值先寫成一個對象
+            name: 'Chris',
+            title: 'developer'
+        }
+    })
+</script>
+</html>

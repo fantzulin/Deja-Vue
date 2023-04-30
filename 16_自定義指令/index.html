@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定義指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        需求 1: 定義一個 v-big 指令，和 v-text 功能類似，但會把綁定的數值放大 10 倍。
+        需求 2: 定義一個 v-fbind 指令，和 v-bind 功能類似，但可以讓其所綁定的 input 元素默認獲取焦點。
+        自定義指令總結:
+            一、定義語法:
+                (1). 局部指令:
+                    new Vue({
+                        directives: { 指令名: 配置對象 }
+                    })
+                    或
+                    new Vue({
+                        directives: { 指令名: 回調函數 }
+                    })
+                (2). 全局指令:
+                    Vue.directive(指令名, 配置對象)
+                    或
+                    Vue.directive(指令名, 回調函數)
+            
+            二、配置對象中常用的 3 個回調:
+                (1). bind: 指令與元素成功綁定時調用。
+                (2). inserted: 指令所在元素被插入頁面時調用。
+                (3). update: 指令所在模板結構被重新解析時調用。
+            
+            三、備註:
+                1. 指令定義時不加 v-，但使用時要加 v-:
+                2. 指令名如果是多個單詞，要使用 kebab-case 命名方式，不要用 camelCase 命名。
+    -->
+    <div id="root">
+        <h2>當前的 n 值是: <span v-text="n"></span></h2>
+        <!-- <h2>放大 10 倍後的 n 值是: <span v-big-number="n * 10"></span></h2> -->
+        <h2>放大 10 倍後的 n 值是: <span v-big="n * 10"></span></h2>
+        <button @click="n++">n++</button>
+        <hr>
+        <input type="text" v-focus_bind:value="n">
+    </div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    // 定義全局指令
+    Vue.directive('focus_bind2', {
+        // 指令與元素成功綁定時(一上來)
+        /*'big-number'(element, binding){
+            element.value = binding.value
+        },*/
+        bind(element, binding){
+            console.log(this) // 注意此處的 this 是 window
+            element.value = binding.value
+        },
+        // 指令所在元素被插入頁面時
+        inserted(element, binding) {
+            element.focus()
+        },
+        // 指令所在的模板被重新解析時
+        update(element, binding) {
+            element.value = binding.value
+        }
+    })
+
+    Vue.directive('big2', function(element, binding){
+        element.innerText = binding.value
+    })
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            n: 1
+        },
+        directives:{
+            // big 函數何時會被調用? 1. 指令與元素成功綁定時(一上來)。2. 指令所在的模板被重新解析時。
+            big(element, binding){
+                element.innerText = binding.value
+            },
+            focus_bind:{
+                // 指令與元素成功綁定時(一上來)
+                /*'big-number'(element, binding){
+                    element.value = binding.value
+                },*/
+                bind(element, binding){
+                    console.log(this) // 注意此處的 this 是 window
+                    element.value = binding.value
+                },
+                // 指令所在元素被插入頁面時
+                inserted(element, binding) {
+                    element.focus()
+                },
+                // 指令所在的模板被重新解析時
+                update(element, binding) {
+                    element.value = binding.value
+                }
+            }
+        }
+    })
+</script>
+</html>

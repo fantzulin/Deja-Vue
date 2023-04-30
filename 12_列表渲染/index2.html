@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>key 的原理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--
+            面試題: React、Vue 中的 key 有什麼作用? (key 的內部原理)
+
+            1. 虛擬 DOM 中 key 的作用:
+                key 是虛擬 DOM 對象的標示，當數據發生變化時，Vue 會根據【新數據】生成【新的虛擬 DOM 】，
+                隨後 Vue 進行【新虛擬 DOM 】與【舊虛擬 DOM 】的差異比較，比較規則如下:
+
+            2. 對比規則:
+                (1). 舊虛擬 DOM 中找到了與新虛擬 DOM 相同的 key:
+                    [1]. 若虛擬 DOM 中內容沒變，直接使用之前的真實 DOM!
+                    [2]. 若虛擬 DOM 中內容變了，則生成新的真實 DOM，隨後替換掉頁面中之前的真實 DOM。
+
+                (2). 舊虛擬 DOM 中未找到與新虛擬 DOM 相同的 key
+                    創建新的真實 DOM，雖後渲染到頁面。
+
+            3. 用 index 作為 key 可能會引發的問題:
+                1. 若對數據進行: 逆序添加、逆序刪除等破壞順序操作:
+                    會產生沒有必要的真實 DOM 更新 ==> 介面效果沒問題，但效率低。
+                
+                2. 如果結構中還包含輸入類的 DOM:
+                    會產生錯誤 DOM 更新 ==> 介面有問題。
+
+            4. 開發中如何選擇 key?
+                1. 最好使用每條數據的唯一標示作為 key，比如 id、手機號、身分證號、學號等唯一值。
+                2. 如果不存在對數據的逆序添加、逆序刪除等破壞順序操作，僅用於渲染列表用於展示，
+                    使用 index 作為 key 是沒有問題的。
+        
+        -->
+
+        <!-- 遍歷數組 -->
+        <h2>人員列表(遍歷數組)</h2>
+        <button @click.once="add">添加一個 Eva</button>
+        <ul>
+            <li v-for="(person, index) of person_list" :key="person.id">
+                {{ person.name }}-{{ person.age }}
+                <input type="text">
+            </li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            person_list: [
+                {id: '001', name: 'Chris', age: 29},
+                {id: '002', name: 'Amy', age: 30},
+                {id: '003', name: 'Dora', age: 31}
+            ]
+        },
+        methods: {
+            add(){
+                const person = { id: '004', name: 'Eva', age: 32 }
+                this.person_list.unshift(person)
+            }
+        },
+    })
+</script>
+</html>

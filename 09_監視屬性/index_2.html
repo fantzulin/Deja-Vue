@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天氣案例_監視屬性</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        監視屬性 watch:
+            1. 當被監視的屬性變化時，回調函數自動調用，進行相關操作
+            2. 監視的屬性必須存在，才能進行監視!!
+            3. 監視的兩種寫法:
+                (1). new Vue 時傳入 watch 配置
+                (2). 通過 vm.#watch 監視
+    -->
+
+    <div id="root">
+        <h2>today's weather is {{ info }}.</h2>
+        <button @click="switch_weather">switch weather</button>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            is_hot: true
+        },
+        computed:{
+            info(){
+                return this.is_hot ? 'hot' : 'cool'
+            }
+        },
+        methods:{
+            switch_weather(){
+                this.is_hot = !this.is_hot
+            }
+        },
+        /*watch:{
+            is_hot:{
+                immediate:true, // 初始化時讓 handler 調用一下
+                // handler 什麼時候調用? 當 is_hot 發生改變時。
+                handler(newValue, oldValue){
+                    console.log('is_hot 被修改了',newValue,oldValue)
+                }
+            }
+        }*/
+    })
+
+    vm.$watch('is_hot',{
+        immediate:true, // 初始化時讓 handler 調用一下
+        // handler 什麼時候調用? 當 is_hot 發生改變時。
+        handler(newValue, oldValue){
+            console.log('is_hot 被修改了',newValue,oldValue)
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天氣案例</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- -->
+
+    <div id="root">
+        <h2>today's weather is {{ info }}.</h2>
+        <!-- 綁定事件的時候: @xxx="yyy" yyy 可以寫一些簡單的語句 -->
+        <!-- <button @click="is_hot = !is_hot">switch weather</button> -->
+        <button @click="switch_weather">switch weather</button>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            is_hot: true
+        },
+        computed:{
+            info(){
+                return this.is_hot ? 'hot' : 'cool'
+            }
+        },
+        methods: {
+            switch_weather(){
+                this.is_hot = !this.is_hot
+            }
+        }
+    })
+</script>
+</html>

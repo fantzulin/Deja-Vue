@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 監測數據改變的原理_對象</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>學校名稱: {{ name }}</h2>
+        <h2>學校地址: {{ address }}</h2>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+    
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            name: 'Chris',
+            address: 'Taipei',
+            student: {
+                name: 'Amy',
+                age: {
+                    real_age: 29,
+                    fake_age: 18
+                },
+                friends:[
+                    {name: 'Bill', age: 30}
+                ]
+            }
+        }
+    })
+</script>
+</html>

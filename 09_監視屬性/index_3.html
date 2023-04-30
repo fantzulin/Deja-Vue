@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天氣案例_深度監視</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        深度監視:
+            (1). Vue 中的 watch 默認不監測對象內部值的改變(一層)。
+            (2). 配置 deep:true 可以監測對象內部值改變(多層)。
+        備註:
+            (1). Vue 自身可以監測對象內部值的改變，但 Vue 提供的 watch 默認不可以!
+            (2). 使用 watch 時根據數據的具體結構，決定是否採用深度監視。
+    -->
+
+    <div id="root">
+        <h2>today's weather is {{ info }}.</h2>
+        <button @click="switch_weather">switch weather</button>
+        <hr>
+        <h3>a 的值是: {{ numbers.a }}</h3>
+        <button @click="numbers.a++">a+1</button>
+        <h3>b 的值是: {{ numbers.b }}</h3>
+        <button @click="numbers.b++">b+1</button>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            is_hot: true,
+            numbers:{
+                a:1,
+                b:1
+            }
+        },
+        computed:{
+            info(){
+                return this.is_hot ? 'hot' : 'cool'
+            }
+        },
+        methods:{
+            switch_weather(){
+                this.is_hot = !this.is_hot
+            }
+        },
+        watch:{
+            is_hot:{
+                // handler 什麼時候調用? 當 is_hot 發生改變時。
+                handler(newValue, oldValue){
+                    console.log('is_hot 被修改了',newValue,oldValue)
+                }
+            },
+            // 監視多級結構中某個屬性的變化
+            /*'numbers.a':{
+                handler(){
+                    console.log('a 被修改了')
+                }
+            }*/
+            // 監視多級結構中所有屬性的變化
+            numbers:{
+                deep: true,
+                handler(){
+                    console.log('numbers 被修改了')
+                }
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例_watch實現</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        computed 和 watch 之間的區別:
+            1. computed 能完成的功能， watch 都可以完成。
+            2. watch 能完成的功能，computed 不一定能完成。例如: watch 可以進行異步操作。
+        兩個重要的小原則:
+            1. 所被 Vue 管理的函數，最好寫成普通函數，這樣 this 的指向才是 vm 或組件實例對象。
+            2. 所有不被 Vue 所管理的函數(定時器的回調函數、ajax 的回調函數、Promise 的回調函數等)，最好寫成箭頭函數，這樣 this 的指向組件實例對象。
+    -->
+    <div id="root">
+    姓: <input type="text" v-model="last_name"><br>
+    名: <input type="text" v-model="first_name"><br>
+    全名: <span>{{ full_name }}</span><br>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false // 關閉 Vue 在初始啟動產生的提示
+
+    const vm = new Vue({
+        el: '#root',
+        data:{
+            first_name: 'Chris',
+            last_name: 'Fan',
+            full_name: 'Fan-Chris'
+        },
+        watch:{
+            first_name(value){
+                setTimeout(() => {
+                    console.log(this)
+                    this.full_name = this.last_name + '-' + value
+                }, 1000);
+            },
+            last_name(value){
+                this.full_name = value + '-' + this.first_name
+            },
+
+        }
+    })
+</script>
+</html>
