@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <!-- 針對 IE 瀏覽器的一個特殊配置，讓 IE 瀏覽器以最高的渲染級別渲染頁面 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- RWD 基本設定 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- 網頁標籤 icon -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- 網頁標籤標題 -->
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <!-- 當瀏覽器不支援 js 時會顯示提示 -->
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <!-- 容器 -->
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
