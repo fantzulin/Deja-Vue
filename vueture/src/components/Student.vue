@@ -28,12 +28,12 @@ export default {
       sendStudentName() {
         // 觸發 Student 組件實例身上的 gStudent 事件
         this.$emit('gStudent', this.name)
-        this.$emit('test')
+        this.$emit('click')
       },
       unbind() {
-        // this.$off('gStudent') // 解綁一個自定義事件
+        this.$off('gStudent') // 解綁一個自定義事件
         // this.$off(['gStudent', 'test']) // 解綁多個自定義事件
-        this.$off() // 解綁所有的自定義事件
+        // this.$off() // 解綁所有的自定義事件
       },
       death() {
         this.$destroy() // 銷毀了當前 Student 組件的實例對象，銷毀後所有 Student 實例的自定義事件全都不奏效。

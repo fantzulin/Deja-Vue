@@ -1,4 +1,4 @@
-# myvue
+# Vueture
 
 ## 總結 TodoList 案例
 
@@ -57,3 +57,33 @@
     (3). xxxStorage.getItem(xxx) 如果 xxx 對應的 value 獲取不到，那麼 getItem 的返回值是 null。
     
     (4). JSON.parse(null) 的結果依然是 null。
+
+## 組件的自定義事件
+
+1. 一種組件間通信的方式，適用於：子組件 ===> 父組件
+
+2. 使用場景：A 是父組件，B 是子組件，B 想給 A 傳數據，那麼就要在 A 中給 B 綁定自定義事件(事件的回調在 A 中)。
+
+3. 綁定自定義事件：
+    
+    (1). 第一種方式，在父組件中：`<Demo @funName="test"/>` 或 `<Demo v-on:funName="test"/>`
+
+    (2). 第二種方式，在父組件中：
+
+        
+        <Demo ref="theName"/>
+        ......
+        mounted() {
+            this.$refs.theName$on('funName', this.test)
+        }
+        
+
+    (3). 若想讓自定義事件只能觸發一次，可以使用 `once` 修飾符，或 `$once` 方法。
+
+4. 觸發自定義事件：`this.$emit('funName', 數據)`
+
+5. 解綁自定義事件：`this.$off('funName')`
+
+6. 組件上也可以綁定 DOM 事件，需要使用 `native` 修飾符
+
+7. 注意：通過 `this.$ref.theName$on('funName', 回調)`綁定自定義事件時，回調要麼配置在 methods 中，要麼用箭頭函數，否則 this 指向會出問題!
