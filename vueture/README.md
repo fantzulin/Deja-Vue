@@ -117,3 +117,27 @@
     (2). 提供數據： `this.$bus.$emit('xxx', 數據)`
 
 4. 最好在 beforeDestroy 鉤子中，用 $off 去解綁**當前組件所用到的**事件。
+
+## 消息訂閱與發佈 (pubsub)
+
+1. 一種組件間通信的方式，適用於任意組件間通信。
+
+2. 使用步驟：
+
+    (1). 安裝 pubsub: `npm i pubsub-js`
+    
+    (2). 引入： `import pubsub from 'pubsub-js'`
+    
+    (3). 接收數據：A 組件想接收數據，則在 A 組件中訂閱消息，訂閱的**回調留在 A 組件自身。**
+    
+            methods() {
+                demo(data){...}
+            }
+            ...
+            mounted() {
+                this.pid = pubsub.subscribe('xxx', this.demo) // 訂閱消息
+            }
+
+    (4). 提供數據： `pubsub.publish('xxx', 數據)`
+    
+    (5). 最好在 beforeDestroy 鉤子中，用 `pubsub.unsubscribe(pid)` 去**取消訂閱**
