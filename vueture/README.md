@@ -87,3 +87,33 @@
 6. 組件上也可以綁定 DOM 事件，需要使用 `native` 修飾符
 
 7. 注意：通過 `this.$ref.theName$on('funName', 回調)`綁定自定義事件時，回調要麼配置在 methods 中，要麼用箭頭函數，否則 this 指向會出問題!
+
+## 全局事件總線(GlobalEventBus)
+
+1. 一種組件間通信的方式，適用於**任意組件間通信**
+
+2. 安裝全局事件總線
+
+        new Vue({
+            ...
+            beforeCreate() {
+                Vue.prototype.$bus = this // 安裝全局事件總線，$bus 就是當前應用的 vm
+            },
+            ...
+        })
+
+3. 使用事件總線:
+
+    (1). 接收數據：A 組件想接收數據，則在 A 組件中給 $bus 綁定自定義事件，事件的 **回調留在 A 組件自身。**
+
+        methods() {
+            demo(data) {...}
+        }
+        ...,
+        mounted() {
+            this.$bus.$on('xxx', this.demo)
+        }
+
+    (2). 提供數據： `this.$bus.$emit('xxx', 數據)`
+
+4. 最好在 beforeDestroy 鉤子中，用 $off 去解綁**當前組件所用到的**事件。
