@@ -141,3 +141,11 @@
     (4). 提供數據： `pubsub.publish('xxx', 數據)`
     
     (5). 最好在 beforeDestroy 鉤子中，用 `pubsub.unsubscribe(pid)` 去**取消訂閱**
+
+    ## nextTick
+
+    1. 語法：`this.$nextTick(回調函數)`
+
+    2. 作用：在下一次 DOM 更新結束後執行其指定的回調。
+
+    3. 什麼時候用：當改變數據後，要基於更新後的新 DOM 進行某些操作時，要在 nextTick 所指定的回調函數中執行。
