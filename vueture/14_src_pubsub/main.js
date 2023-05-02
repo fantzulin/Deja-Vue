@@ -7,10 +7,9 @@ import App from './App.vue'
 Vue.config.productionTip = false
 
 // 創建 vm
-new Vue({
+const vm = new Vue({
   el: '#app',
-  render: h => h(App),
-  beforeCreate() {
-    Vue.prototype.$bus = this
-  }
+  render: h => h(App)
 })
+
+vm.prototype
