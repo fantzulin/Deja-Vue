@@ -4,9 +4,18 @@
       <input type="checkbox" :checked="todo.done" @change="handleCheck(todo.id)"/>
       <!-- 如下代碼也能實現功能，但是不太推薦，因為有點違反原則，因為修改了 props -->
       <!-- <input type="checkbox" v-model="todo.done"/> -->
-      <span>{{ todo.title }}</span>
+      <span v-show="!todo.isEdit">{{ todo.title }}</span>
+      <input 
+        type="text"
+        v-show="todo.isEdit"
+        :value="todo.title"
+        @blur="handleBlur(todo, $event)"  
+      >
     </label>
-    <button class="btn btn-danger" @click="handleDelete(todo.id)">Delete</button>
+    <div>
+      <button class="btn btn-edit" v-show="!todo.isEdit" @click="handleEdit(todo.id)">Edit</button>
+      <button class="btn btn-danger" @click="handleDelete(todo)">Delete</button>
+    </div>
   </li>
 </template>
 
@@ -30,14 +39,30 @@ export default {
         // this.$bus.$emit('deleteTodo', id)
         pubsub.publish('deleteTodo', id)
       }
+    },
+    // 編輯
+    handleEdit(todo) {
+      if(todo.hasOwnProperty('isEdit')) {
+        todo.isEdit = false
+      } else {
+        this.$set(this.todo, 'isEdit', true)  
+      }
+    },
+    // 失去焦點回調(真正執行修改邏輯)
+    handleBlur(todo, e) {
+      todo.isEdit = false
+      if(!e.target.value.trim()) return
+      this.$bus.$emit('updateTodo', todo.id, e.target.value)
     }
   }
-  
 }
 </script>
 
 <style scoped>
   li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     list-style: none;
     height: 36px;
     line-height: 36px;
@@ -58,9 +83,8 @@ export default {
   }
 
   li button {
-    float: right;
     display: none;
-    margin-top: 3px;
+    margin: 3px;
   }
 
   li:before {
@@ -76,6 +100,6 @@ export default {
   }
 
   li:hover button{
-    display: block;
+    display: inline-block;
   }
 </style>
