@@ -1,9 +1,10 @@
 <template>
     <div>
         <button @click="isShow = !isShow">show / hide</button>
-        <transition name="hello" appear>
-            <h1 v-show="isShow">Hello!</h1>
-        </transition>
+        <transition-group name="hello" appear>
+            <h1 v-show="!isShow" key="title">Hello!</h1>
+            <h1 v-show="isShow" key="title">Chris</h1>
+        </transition-group>
     </div>
 </template>
 
