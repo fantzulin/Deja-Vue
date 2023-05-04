@@ -7,7 +7,7 @@ module.exports = defineConfig({
     proxy: 'http://localhost:5000'
   }, */
   // 開啟代理服務器(方式二)
-  devServer: {
+  /* devServer: {
     proxy: {
       '/chris': {
         target: 'http://localhost:5000',
@@ -22,5 +22,5 @@ module.exports = defineConfig({
         changeOrigin: true // 用於控制請求頭中的 host 值
       }
     }
-  }
+  }*/
 })
