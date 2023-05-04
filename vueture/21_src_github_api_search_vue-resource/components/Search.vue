@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axio from 'axios'
 export default {
     name: 'Search',
     data() {
@@ -26,7 +25,7 @@ export default {
         searchUser() {
             // 請求前更新 List 的數據
             this.$bus.$emit('updateListData', {isFirst: false, isLoading: true, errMsg: '', users: []})
-            axio.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+            this.$http.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
                 response => {
                     console.log('search success!')
                     // 請求成功後更新 List 的數據
