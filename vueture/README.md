@@ -142,39 +142,80 @@
     
     (5). 最好在 beforeDestroy 鉤子中，用 `pubsub.unsubscribe(pid)` 去**取消訂閱**
 
-    ## nextTick
+## nextTick
 
-    1. 語法：`this.$nextTick(回調函數)`
+1. 語法：`this.$nextTick(回調函數)`
 
-    2. 作用：在下一次 DOM 更新結束後執行其指定的回調。
+2. 作用：在下一次 DOM 更新結束後執行其指定的回調。
 
-    3. 什麼時候用：當改變數據後，要基於更新後的新 DOM 進行某些操作時，要在 nextTick 所指定的回調函數中執行。
+3. 什麼時候用：當改變數據後，要基於更新後的新 DOM 進行某些操作時，要在 nextTick 所指定的回調函數中執行。
 
-    ## Vue 封裝的過度與動畫
+## Vue 封裝的過度與動畫
 
-    1. 作用：在插入、更新或移除 DOM 元素時，在合適的時候元素添加樣式類名。
+1. 作用：在插入、更新或移除 DOM 元素時，在合適的時候元素添加樣式類名。
 
-    2. 圖示：
+2. 圖示：
 
-    ![transition.png](/vueture/17_src_transition_and_animation/transition.png)
+![transition.png](/vueture/17_src_transition_and_animation/transition.png)
 
-    3. 寫法：
+3. 寫法：
 
-        (1). 準備好樣式：
+    (1). 準備好樣式：
 
-        * 元素進入的樣式：
-            * v-enter：進入的起點
-            * v-enter-active：進入過程中
-            * v-enter-to：進入的終點
-        * 元素離開的樣式：
-            * v-leave：離開的起點
-            * v-leave-active：離開過程中
-            * v-leave-to：離開的終點
-        
-        (2). 使用 `<transition>` 包裹要過度的元素，並配置 name 屬性：
+    * 元素進入的樣式：
+        * v-enter：進入的起點
+        * v-enter-active：進入過程中
+        * v-enter-to：進入的終點
+    * 元素離開的樣式：
+        * v-leave：離開的起點
+        * v-leave-active：離開過程中
+        * v-leave-to：離開的終點
+    
+    (2). 使用 `<transition>` 包裹要過度的元素，並配置 name 屬性：
 
-            <transition name="hello">
-                <h1 v-show="isShow">Hello~</h1>
-            </transition>
+        <transition name="hello">
+            <h1 v-show="isShow">Hello~</h1>
+        </transition>
 
-        (3). 備註：若有多個元素需要過度，則需要使用：`<transition-group>`，且每個元素都要指定 `key` 值。
+    (3). 備註：若有多個元素需要過度，則需要使用：`<transition-group>`，且每個元素都要指定 `key` 值。
+
+## vue 腳手架配置代理
+
+### 方法一
+
+在 vue.config.js 中添加如下配置：
+
+    devServer: {
+        proxy: "http://localhost:5000"
+    }
+
+說明：
+
+1. 優點：配置簡單，請求資源時直接發給前端(8080)即可。
+
+2. 缺點：不能配置多個代理，不能靈活的控制請求是否走代理
+
+3. 工作方式：若按照上述配置代理，當請求了前端不存在的資源時，那麼該請求會轉發給服務器(優先匹配前端資源)
+
+### 方法二
+
+編寫 vue.config.js 配置具體代理規則：
+
+    module.exports = {
+        deServer: {
+            proxy: {
+                '/api': { // 匹配所有以 '/api' 開頭的請求路徑
+                    target: 'http://localhost:5000', // 代理目標的基礎路徑
+                    pathRewrite: {'^/api': ''},
+                    ws: true, // 用於支持 websocket
+                    changeOrigin: true, // 用於控制請求頭中的 host 值
+                },
+                '/other_api': {
+                    target: 'http://localhost:5001',
+                    pathRewrite: {'^/other_api': ''},
+                    ws: true,
+                    changeOrigin: true,
+                },
+            }
+        }
+    }
