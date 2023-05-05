@@ -2,8 +2,7 @@
     <div class="category">
         <h3>{{ title }} category</h3>
         <!-- 定義一個插槽(挖個坑，等著組件的使用者進行填充) -->
-        <slot name="content"></slot>
-        <slot name="footer"></slot>
+        <slot></slot>
     </div>
 </template>
 
