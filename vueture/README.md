@@ -219,3 +219,85 @@
             }
         }
     }
+
+## 插槽
+
+1. 作用：讓父組件可以向子組件指定位置插入 html 結構，也是一種組件間通信的方式，適用於**父組件 ===> 子組件**。
+
+2. 分類：默認插槽、具名插槽、作用域插槽
+
+3. 使用方式：
+    
+    1. 默認插槽：
+
+        父組件中，
+            <Category>
+                <div>html結構</div>
+            </Category>
+        子組件中，
+            <template>
+                <div>
+                    <!-- 定義插槽 -->
+                    <slot>插槽默認內容</slot>
+                </div>
+            </template>
+    
+    2. 具名插槽：
+
+        父組件中，
+            <Category>
+                <template slot="content">
+                    <div>html結構</div>
+                </template>
+                <template v-slot=:footer>
+                    <div>html結構</div>
+                </template>
+            </Category>
+        子組件中，
+            <template>
+                <div>
+                    <!-- 定義插槽 -->
+                    <slot name="content">插槽默認內容</slot>
+                    <slot name="footer">插槽默認內容</slot>
+                </div>
+            </template>
+
+    3. 作用域插槽：
+
+        1. 理解：**數據在組件的自身，但根據數據生成的結構需要組件的使用者來決定，**(games 數據在 Category 組件中，但使用數據所遍歷出來的結構由 App 組件決定)
+
+        2. 具體編碼：
+
+            父組件中，
+                <Category>
+                    <template scope="scopeData">
+                        <!-- 生成的是 ul 列表 -->
+                        <ul>
+                            <li v-for="g in scopeData.games" :key="g">{{ g }}</li>
+                        </ul>
+                    </template>
+                </Category>
+                <Category>
+                    <template slot-scope="scopeData">
+                        <!-- 生成的是 h4 列表 -->
+                        <h4 v-for="g in scopeData.games" :key="g">{{ g }}</h4>
+                    </template>
+                </Category>
+            子組件中，
+                <template>
+                    <div>
+                        <slot :games="games"></slot>
+                    </div>
+                </template>
+                <script>
+                    export default {
+                        name: 'Category',
+                        props: ['title'],
+                        // 數據在子組件自身
+                        data() {
+                            return {
+                                games: ['game1', 'game2', 'game3']
+                            }
+                        },
+                    }
+                </script>
