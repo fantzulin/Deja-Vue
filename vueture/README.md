@@ -349,3 +349,46 @@
                 render: h => h(App),
                 store
             })
+    
+4. 基本使用
+
+    1. 初始化數據、配置 `actions`、配置 `mutations`，操作文件 `store.js`
+
+            // 引入 vue 核心
+            import Vue from 'vue'
+            // 引入 Vuex
+            import Vuex from 'vuex'
+            // 應用 Vuex插件
+            Vue.use(Vuex)
+
+            const actions = {
+                // 響應組件中加的動作
+                plus(miniStore, value) {
+                    miniStore.commit('Plus', value)
+                }
+            }
+
+            const mutations = {
+                // 執行加
+                Plus(state, value) {
+                    state.sum += value
+                }
+            }
+
+            // 初始化數據
+            const state = {
+                sum: 0
+            }
+
+            //創建並暴露(導出) store
+            export default new Vuex.Store({
+                actions,
+                mutations,
+                state,
+            })
+
+    2. 組件中讀取 vuex 中的數據: `$store.state.sum`
+
+    3. 組件中修改 vuex 中的數據: `$store.dispatch('action 中的方法名', 數據)` 或 `$store.commit('mutations 中的方法名', 數據)`
+
+    **備註:若沒有網路請求或其他業務邏輯，組件中也可以越過 actions，即不寫 `dispatch`，直接編寫 `commit`**
