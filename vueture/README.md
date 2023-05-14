@@ -392,3 +392,54 @@
     3. 組件中修改 vuex 中的數據: `$store.dispatch('action 中的方法名', 數據)` 或 `$store.commit('mutations 中的方法名', 數據)`
 
     **備註:若沒有網路請求或其他業務邏輯，組件中也可以越過 actions，即不寫 `dispatch`，直接編寫 `commit`**
+
+5. getters 的使用
+
+    1. 概念：當 state 中的數據需要經過加工後再使用時，可以使用 getters 加工。
+
+    2. 在 `store.js` 中追加 `getters` 配置
+
+            ...
+
+            const getters = {
+                bigSum(state) {
+                    return state.sum*10
+                }
+            }
+
+            // 創建並暴露 store
+            export default new Vuex.Store({
+                ...
+                getters
+            })
+    
+    3. 組件中讀取數據: `$store.getters.bigSum`
+
+6. 四個 map 方法的使用
+
+    1. mapState 方法: 用於幫助我們映射 `state` 中的數據為計算屬性
+
+        computed: {
+            // 借助 mapState 生成計算屬性，sum、school、subject(對象寫法)
+            ...mapState({
+                sum: 'sum',
+                school: 'school',
+                subject: 'subject',
+            })
+
+            // 借助 mapState 生成計算屬性，sum、school、subject(數組寫法)
+            ...mapState(['sum', 'school', 'subject'])
+        }
+
+    2. mapGetters 方法: 用於幫助我們映射 `getters` 中的數據為計算屬性
+
+        computed: {
+            // 借助 mapGetters 生成計算屬性，bigSum(對象寫法)
+            ...mapGetters({bigSum: 'bigSum'}),
+
+            // 借助 mapGetters 生成計算屬性，bigSum(數組寫法)
+            ...mapGetters(['bigSum'])
+        }
+
+    3. mapAction 方法: 
+    4. mapMutations 方法:
