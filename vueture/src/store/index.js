@@ -20,7 +20,7 @@ const actions = {
     },
     plusWait(miniStore, value) {
         setTimeout(() => {
-            miniStore.commit('PlusWait', value)
+            miniStore.commit('Plus', value)
         }, 1000)
     },
 }

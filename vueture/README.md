@@ -419,27 +419,54 @@
 
     1. mapState 方法: 用於幫助我們映射 `state` 中的數據為計算屬性
 
-        computed: {
-            // 借助 mapState 生成計算屬性，sum、school、subject(對象寫法)
-            ...mapState({
-                sum: 'sum',
-                school: 'school',
-                subject: 'subject',
-            })
+            computed: {
+                // 借助 mapState 生成計算屬性，sum、school、subject(對象寫法)
+                ...mapState({
+                    sum: 'sum',
+                    school: 'school',
+                    subject: 'subject',
+                })
 
-            // 借助 mapState 生成計算屬性，sum、school、subject(數組寫法)
-            ...mapState(['sum', 'school', 'subject'])
-        }
+                // 借助 mapState 生成計算屬性，sum、school、subject(數組寫法)
+                ...mapState(['sum', 'school', 'subject'])
+            }
 
     2. mapGetters 方法: 用於幫助我們映射 `getters` 中的數據為計算屬性
 
-        computed: {
-            // 借助 mapGetters 生成計算屬性，bigSum(對象寫法)
-            ...mapGetters({bigSum: 'bigSum'}),
+            computed: {
+                // 借助 mapGetters 生成計算屬性，bigSum(對象寫法)
+                ...mapGetters({bigSum: 'bigSum'}),
 
-            // 借助 mapGetters 生成計算屬性，bigSum(數組寫法)
-            ...mapGetters(['bigSum'])
-        }
+                // 借助 mapGetters 生成計算屬性，bigSum(數組寫法)
+                ...mapGetters(['bigSum'])
+            }
 
-    3. mapAction 方法: 
-    4. mapMutations 方法:
+    3. mapActions 方法: 用於幫助我們生成與 `actions` 對話的方法，即: 包含 `$store.dispatch(xxx)` 的函數
+
+            methods: {
+
+                // 靠 mapActions 生成，addOdd、addWait(對象形式)
+                ...mapActions({
+                    addOdd: 'plusOdd',
+                    addWait: 'plusWait'
+                }),
+
+                // 靠 mapActions 生成，plusOdd、plusWait(數組形式)
+                ...mapActions(['plusOdd', 'plusWait'])
+            }
+
+    4. mapMutations 方法: 用於幫助我們生成與 `mutations` 對話的方法，即: 包含 `$store.commit(xxx)` 的函數
+
+            methods: {
+
+                // 靠 mapMutations 生成，addOdd、addWait(對象形式)
+                ...mapMutations({
+                    addOdd: 'plusOdd',
+                    addWait: 'plusWait'
+                }),
+
+                // 靠 mapMutations 生成，plusOdd、plusWait(數組形式)
+                ...mapMutations(['plusOdd', 'plusWait'])
+            }
+
+**備註: mapAction 與 mapMutations 使用時，若需要傳遞參數需要: 在模板中榜定事件時傳遞好參數，否則參數是事件對象。**
