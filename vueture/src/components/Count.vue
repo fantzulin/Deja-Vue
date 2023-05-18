@@ -11,8 +11,8 @@
         </select>
         <button @click="add(n)">+</button>
         <button @click="minus(n)">-</button>
-        <button @click="addOdd(n)">當前求和為奇數再加</button>
-        <button @click="addWait(n)">wait second</button>
+        <button @click="plusOdd(n)">當前求和為奇數再加</button>
+        <button @click="plusWait(n)">wait second</button>
     </div>
 </template>
 
@@ -27,18 +27,19 @@ export default {
     },
     computed: {
         // 借助 mapState 生成計算屬性，從 state 中讀取數據。(數組寫法)
-        ...mapState(['sum', 'school', 'subject', 'personList']),
+        ...mapState('countAbout', ['sum', 'school', 'subject']),
+        ...mapState('personAbout', ['personList']),
         // 借助 mapGetters 生成計算屬性，從 getters 中讀取數據。(數組寫法)
-        ...mapGetters(['bigSum'])
+        ...mapGetters('countAbout',['bigSum'])
     },
     methods: {
         // 借助 mapMutations 生成對應的方法，方法中會調用 commit 去聯繫 mutations (對象寫法)
-        ...mapMutations({
+        ...mapMutations('countAbout',{
             add: 'Plus',
             minus: 'Minus'
         }),
         // 借助 mapActions 生成對應的方法，方法中會調用 dispatch 去聯繫 actions(數組寫法)
-        ...mapActions(['plusOdd', 'plusWait'])
+        ...mapActions('countAbout',['plusOdd', 'plusWait'])
     },
     mounted() {
     }
