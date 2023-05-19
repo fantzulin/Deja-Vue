@@ -4,15 +4,11 @@
 
 1. 組件化編碼流程:
 
-    (1). 拆分靜態組件: 組件要按照功能點拆分，命名不要與 html 元素衝突。
-
-    (2). 實現動態組件: 考慮好數據的存放位置，數據是一個組件在用，還是一些組件在用:
-
-        1). 一個組件在用: 放在組件自身即可。
-
-        2). 一些組件在用: 放在他們共同的父組件上 (狀態提升)
-
-    (3). 實現交互: 從綁定事件開始。
+    1. 拆分靜態組件: 組件要按照功能點拆分，命名不要與 html 元素衝突。
+    2. 實現動態組件: 考慮好數據的存放位置，數據是一個組件在用，還是一些組件在用:
+        1. 一個組件在用: 放在組件自身即可。
+        2. 一些組件在用: 放在他們共同的父組件上 (狀態提升)
+    3. 實現交互: 從綁定事件開始。
 
 2. props 適用於:
 
@@ -32,31 +28,31 @@
 
 3. 相關 API:
 
-    (1). xxxStorage.setItem('key', 'value');
+    1. xxxStorage.setItem('key', 'value');
 
         該方法接受一個鍵和值作為參數，會把鍵值對添加到存儲中，如果鍵名存在，則更新對應的值。
 
-    (2). xxxxStorage.getItem('key');
+    2. xxxxStorage.getItem('key');
 
         該方法接受一個鍵名作為參數，返回鍵名對應的值。
 
-    (3). xxxStorage.removeItem('key');
+    3. xxxStorage.removeItem('key');
 
         該方法接受一個鍵名作為參數，並把該鍵名從存儲中刪除。
 
-    (4). xxxStorage.clear()
+    4. xxxStorage.clear()
 
         該方法會清空存儲中的所有數據。
 
 4. 備註:
 
-    (1). SessionStorage 存儲的內容會隨著瀏覽器窗口關閉而消失。
+    1. SessionStorage 存儲的內容會隨著瀏覽器窗口關閉而消失。
     
-    (2). LocalStorage 存儲的內容，需要手動清除才會消失。
+    2. LocalStorage 存儲的內容，需要手動清除才會消失。
     
-    (3). xxxStorage.getItem(xxx) 如果 xxx 對應的 value 獲取不到，那麼 getItem 的返回值是 null。
+    3. xxxStorage.getItem(xxx) 如果 xxx 對應的 value 獲取不到，那麼 getItem 的返回值是 null。
     
-    (4). JSON.parse(null) 的結果依然是 null。
+    4. JSON.parse(null) 的結果依然是 null。
 
 ## 組件的自定義事件
 
@@ -66,9 +62,9 @@
 
 3. 綁定自定義事件：
     
-    (1). 第一種方式，在父組件中：`<Demo @funName="test"/>` 或 `<Demo v-on:funName="test"/>`
+    1. 第一種方式，在父組件中：`<Demo @funName="test"/>` 或 `<Demo v-on:funName="test"/>`
 
-    (2). 第二種方式，在父組件中：
+    2. 第二種方式，在父組件中：
 
         
         <Demo ref="theName"/>
@@ -78,7 +74,7 @@
         }
         
 
-    (3). 若想讓自定義事件只能觸發一次，可以使用 `once` 修飾符，或 `$once` 方法。
+    3. 若想讓自定義事件只能觸發一次，可以使用 `once` 修飾符，或 `$once` 方法。
 
 4. 觸發自定義事件：`this.$emit('funName', 數據)`
 
@@ -104,7 +100,7 @@
 
 3. 使用事件總線:
 
-    (1). 接收數據：A 組件想接收數據，則在 A 組件中給 $bus 綁定自定義事件，事件的 **回調留在 A 組件自身。**
+    1. 接收數據：A 組件想接收數據，則在 A 組件中給 $bus 綁定自定義事件，事件的 **回調留在 A 組件自身。**
 
         methods() {
             demo(data) {...}
@@ -114,7 +110,7 @@
             this.$bus.$on('xxx', this.demo)
         }
 
-    (2). 提供數據： `this.$bus.$emit('xxx', 數據)`
+    2. 提供數據： `this.$bus.$emit('xxx', 數據)`
 
 4. 最好在 beforeDestroy 鉤子中，用 $off 去解綁**當前組件所用到的**事件。
 
@@ -124,11 +120,11 @@
 
 2. 使用步驟：
 
-    (1). 安裝 pubsub: `npm i pubsub-js`
+    1. 安裝 pubsub: `npm i pubsub-js`
     
-    (2). 引入： `import pubsub from 'pubsub-js'`
+    2. 引入： `import pubsub from 'pubsub-js'`
     
-    (3). 接收數據：A 組件想接收數據，則在 A 組件中訂閱消息，訂閱的**回調留在 A 組件自身。**
+    3. 接收數據：A 組件想接收數據，則在 A 組件中訂閱消息，訂閱的**回調留在 A 組件自身。**
     
             methods() {
                 demo(data){...}
@@ -138,9 +134,9 @@
                 this.pid = pubsub.subscribe('xxx', this.demo) // 訂閱消息
             }
 
-    (4). 提供數據： `pubsub.publish('xxx', 數據)`
+    4. 提供數據： `pubsub.publish('xxx', 數據)`
     
-    (5). 最好在 beforeDestroy 鉤子中，用 `pubsub.unsubscribe(pid)` 去**取消訂閱**
+    5. 最好在 beforeDestroy 鉤子中，用 `pubsub.unsubscribe(pid)` 去**取消訂閱**
 
 ## nextTick
 
@@ -160,7 +156,7 @@
 
 3. 寫法：
 
-    (1). 準備好樣式：
+    1. 準備好樣式：
 
     * 元素進入的樣式：
         * v-enter：進入的起點
@@ -171,13 +167,13 @@
         * v-leave-active：離開過程中
         * v-leave-to：離開的終點
     
-    (2). 使用 `<transition>` 包裹要過度的元素，並配置 name 屬性：
+    2. 使用 `<transition>` 包裹要過度的元素，並配置 name 屬性：
 
         <transition name="hello">
             <h1 v-show="isShow">Hello~</h1>
         </transition>
 
-    (3). 備註：若有多個元素需要過度，則需要使用：`<transition-group>`，且每個元素都要指定 `key` 值。
+    3. 備註：若有多個元素需要過度，則需要使用：`<transition-group>`，且每個元素都要指定 `key` 值。
 
 ## vue 腳手架配置代理
 
@@ -534,3 +530,40 @@
                 add: 'Plus',
                 minus: 'Minus'
             })
+
+## vue-router
+
+### 相關理解
+
+#### vue-router 的理解
+
+    vue 的一個插件庫，專門用來實現 SPA 應用。
+    
+#### 對 SPA 應用的理解
+
+1. 單頁 Web 應用 (Single page web application, SPA)。
+
+2. 整個應用只有 **一個完整的頁面**。
+
+3. 點擊頁面中的導航連結 **不會刷新** 頁面，只會做頁面的 **局部更新**。
+
+4. 數據需要通過 ajax 請求獲取。
+    
+#### 路由的理解
+
+1. 什麼是路由?
+
+    (1). 一個路由就是一組映射關係(key - value)。
+
+    (2). key 為路徑，value 可能是 function 或 component。
+
+2. 路由分類
+    
+    1. 後端路由:
+        1). 理解: value 是 function，用於處理客戶端提交的請求。
+        2). 工作過程: 服務器接收到一個請求時，根據 **請求路徑** 找到匹配的 **函數** 來處理請求，返回響應數據。
+    2. 前端路由:
+        1). 理解: value 是 component，用於展示頁面內容。
+        2). 工作過程: 當瀏覽器的路徑改變時，對應的組件就會顯示。
+
+### 基本路由
