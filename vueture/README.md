@@ -263,44 +263,44 @@
             </template>
 
     3. 作用域插槽：
-
+        
         1. 理解：**數據在組件的自身，但根據數據生成的結構需要組件的使用者來決定，**(games 數據在 Category 組件中，但使用數據所遍歷出來的結構由 App 組件決定)
 
         2. 具體編碼：
 
-            父組件中，
-                <Category>
-                    <template scope="scopeData">
-                        <!-- 生成的是 ul 列表 -->
-                        <ul>
-                            <li v-for="g in scopeData.games" :key="g">{{ g }}</li>
-                        </ul>
+                父組件中，
+                    <Category>
+                        <template scope="scopeData">
+                            <!-- 生成的是 ul 列表 -->
+                            <ul>
+                                <li v-for="g in scopeData.games" :key="g">{{ g }}</li>
+                            </ul>
+                        </template>
+                    </Category>
+                    <Category>
+                        <template slot-scope="scopeData">
+                            <!-- 生成的是 h4 列表 -->
+                            <h4 v-for="g in scopeData.games" :key="g">{{ g }}</h4>
+                        </template>
+                    </Category>
+                子組件中，
+                    <template>
+                        <div>
+                            <slot :games="games"></slot>
+                        </div>
                     </template>
-                </Category>
-                <Category>
-                    <template slot-scope="scopeData">
-                        <!-- 生成的是 h4 列表 -->
-                        <h4 v-for="g in scopeData.games" :key="g">{{ g }}</h4>
-                    </template>
-                </Category>
-            子組件中，
-                <template>
-                    <div>
-                        <slot :games="games"></slot>
-                    </div>
-                </template>
-                <script>
-                    export default {
-                        name: 'Category',
-                        props: ['title'],
-                        // 數據在子組件自身
-                        data() {
-                            return {
-                                games: ['game1', 'game2', 'game3']
-                            }
-                        },
-                    }
-                </script>
+                    <script>
+                        export default {
+                            name: 'Category',
+                            props: ['title'],
+                            // 數據在子組件自身
+                            data() {
+                                return {
+                                    games: ['game1', 'game2', 'game3']
+                                }
+                            },
+                        }
+                    </script>
 ## Vuex
 
 1. 概念
