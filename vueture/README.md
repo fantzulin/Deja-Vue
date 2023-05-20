@@ -226,37 +226,37 @@
     
     1. 默認插槽：
 
-        父組件中，
-            <Category>
-                <div>html結構</div>
-            </Category>
-        子組件中，
-            <template>
-                <div>
-                    <!-- 定義插槽 -->
-                    <slot>插槽默認內容</slot>
-                </div>
-            </template>
+            父組件中，
+                <Category>
+                    <div>html結構</div>
+                </Category>
+            子組件中，
+                <template>
+                    <div>
+                        <!-- 定義插槽 -->
+                        <slot>插槽默認內容</slot>
+                    </div>
+                </template>
     
     2. 具名插槽：
 
-        父組件中，
-            <Category>
-                <template slot="content">
-                    <div>html結構</div>
+            父組件中，
+                <Category>
+                    <template slot="content">
+                        <div>html結構</div>
+                    </template>
+                    <template v-slot=:footer>
+                        <div>html結構</div>
+                    </template>
+                </Category>
+            子組件中，
+                <template>
+                    <div>
+                        <!-- 定義插槽 -->
+                        <slot name="content">插槽默認內容</slot>
+                        <slot name="footer">插槽默認內容</slot>
+                    </div>
                 </template>
-                <template v-slot=:footer>
-                    <div>html結構</div>
-                </template>
-            </Category>
-        子組件中，
-            <template>
-                <div>
-                    <!-- 定義插槽 -->
-                    <slot name="content">插槽默認內容</slot>
-                    <slot name="footer">插槽默認內容</slot>
-                </div>
-            </template>
 
     3. 作用域插槽：
         
