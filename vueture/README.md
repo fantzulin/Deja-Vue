@@ -554,7 +554,6 @@
 1. 什麼是路由?
 
     1. 一個路由就是一組映射關係(key - value)。
-
     2. key 為路徑，value 可能是 function 或 component。
 
 2. 路由分類
@@ -566,4 +565,41 @@
         1. 理解: value 是 component，用於展示頁面內容。
         2. 工作過程: 當瀏覽器的路徑改變時，對應的組件就會顯示。
 
-### 基本路由
+## 路由
+
+1. 一個路由 (route) 就是一組映射關係 (key - Value)，多個路由需要路由器 (router) 進行管理。
+2. 前端路由: key 是路徑，value 是組件。
+    
+### 基本使用
+
+1. 安裝 vue-router，命令: `npm i vue-router` // vue2 要安裝 vue-router@3
+2. 應用插件: `Vue.use(vueRouter)`
+3. 編寫 router 配置項:
+
+        // 引入 VueRouter
+        import VueRouter from "vue-router";
+        // 引入組件
+        import About from '../components/About'
+        import Home from '../components/Home'
+
+        // 創建 router 實例對象，去管理一組一組的路由規則
+        export default new VueRouter({
+            routes: [
+                {
+                    path: '/about',
+                    component: About
+                },
+                {
+                    path: '/home',
+                    component: Home
+                },
+            ]
+        })
+        
+4. 實現切換 (active-class 可配置高亮樣式)
+
+        <router-link active-class="active" to="/about">About</router-link>
+        
+5. 指定展示位置
+
+        <router-view></router-view>
