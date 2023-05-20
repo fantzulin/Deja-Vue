@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12">
-        <div class="page-header">
-          <h1>Vue Router Demo</h1>
-        </div>
-      </div>
+      <Banner/>
     </div>
     <div class="row">
       <div class="col-3">
@@ -28,7 +24,9 @@
 </template>
 
 <script>
+import Banner from './components/Banner'
 export default {
   name: 'App',
+  components: { Banner }
 }
 </script>
