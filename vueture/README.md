@@ -610,3 +610,31 @@
 2. 通過切換，"隱藏" 了的路由組件，默認是被銷毀的，需要的時候再去掛載。
 3. 每個組件都有自己的 `$route` 屬性，裡面存儲著自己的路由信息。
 4. 整個應用只有一個 router，可以通過組件的 `$route` 屬性獲取到。
+
+### 多級路由
+
+1. 配置路由規則，使用 children 配置項:
+
+        routes: [
+            {
+                path: '/about',
+                component: About
+            },
+            {
+                path: '/home',
+                component: Home,
+                children: [ // 通過 children 配置子級路由
+                    {
+                        path: 'news', //此處一定不要寫，/news
+                        component: News,
+                    },
+                    {
+                        path: 'message', //此處一定不要寫，/message
+                        component: Message,
+                    }
+                ]
+            },
+        ]
+2. 跳轉(要寫完整路徑):
+
+        <router-link class="nav-link" active-class="active" to="message">Message</router-link>
