@@ -635,6 +635,30 @@
                 ]
             },
         ]
+
 2. 跳轉(要寫完整路徑):
 
         <router-link class="nav-link" active-class="active" to="message">Message</router-link>
+
+### 路由的 query 參數
+
+1. 傳遞參數
+
+        <!-- 跳轉路由並攜帶 query 參數，to 的字符串寫法 -->
+        <router-link :to="`/home/message/detail?id=${m.id}&title=${m.title}`">{{ m.title }}</router-link>
+
+        <!-- 跳轉路由並攜帶 query 參數，to 的對象寫法 -->
+        <router-link :to="{
+            path: '/home/message/detail',
+            query: {
+                id: m.id,
+                title: m.title
+            }
+        }">
+            {{ m.title }}
+        </router-link>
+
+2. 接收參數:
+
+        $route.query.id
+        $route.query.title
