@@ -703,3 +703,48 @@
             }">
                 {{ m.title }}
             </router-link>
+
+### 路由的 params 參數
+
+1. 配置路由，聲明接收 params 參數
+
+        {
+            path: '/home',
+            component: Home,
+            children: [
+                {
+                    path: 'message',
+                    component: Message,
+                    children: [
+                        {
+                            name: 'detailRoute', // 給路由命名
+                            path: 'detail',
+                            component: Detail,
+                        }
+                    ]
+                }
+            ]
+        }
+
+2. 傳遞參數
+
+        <!-- 跳轉路由並攜帶 params 參數，to 的字符串寫法 -->
+        <router-link :to="`/home/message/detail/${m.id}/${m.title}`">{{ m.title }}</router-link>
+
+        <!-- 跳轉路由並攜帶 params 參數，to 的對象寫法 -->
+        <router-link :to="{
+            name: 'detailRoute',
+            params: {
+                id: m.id,
+                title: m.title
+            }
+        }">
+            {{ m.title }}
+        </router-link>
+
+**特別注意: 路由攜帶 params 參數時，若使用 to 的對象寫法，則不能使用 path 配置項，必須使用 name 配置!**
+
+3. 接收參數
+        
+        $route.params.id
+        $route.params.title
