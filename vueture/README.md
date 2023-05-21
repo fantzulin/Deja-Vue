@@ -662,3 +662,44 @@
 
         $route.query.id
         $route.query.title
+
+### 命名路由
+
+1. 可以簡化路由的跳轉。 
+2. 如何使用
+    
+    1. 給路由命名:
+
+            {
+                path: '/home',
+                component: Home,
+                children: [
+                    {
+                        path: 'message',
+                        component: Message,
+                        children: [
+                            {
+                                name: 'detailRoute', // 給路由命名
+                                path: 'detail',
+                                component: Detail,
+                            }
+                        ]
+                    }
+                ]
+            }
+
+    2. 簡化跳轉:
+
+            <!-- 簡化前，需要寫完整的路徑 -->
+            <router-link :to="`/home/message/detail?id=${m.id}&title=${m.title}`">{{ m.title }}</router-link>
+
+            <!-- 簡化後，直接通過名字跳轉 -->
+            <router-link :to="{
+                name: 'detailRoute',
+                query: {
+                    id: m.id,
+                    title: m.title
+                }
+            }">
+                {{ m.title }}
+            </router-link>
