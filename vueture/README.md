@@ -815,3 +815,11 @@
         <keep-alive include="News">
             <router-view></router-view>
         </keep-alive>
+
+### 兩個新的生命週期鉤子
+
+1. 作用: 路由組件所獨有的兩個鉤子，用於捕獲路由組件的激活狀態。
+2. 具體名字:
+
+    1. `activated` 路由組件被激活時觸發。
+    2. `deactivated` 路由組件失活時觸發。
