@@ -823,3 +823,32 @@
 
     1. `activated` 路由組件被激活時觸發。
     2. `deactivated` 路由組件失活時觸發。
+
+### 路由守衛
+
+1. 作用: 對路由進行權限控制
+2. 分類: 全局守衛、獨享守衛、組件內守衛
+3. 全局守衛:
+
+        // 全局前置路由守衛，初始化的時候被調用、每次路由切換之前被調用
+        router.beforeEach((to, from, next) => {
+            console.log('前置路由守衛', to, from)
+            if (to.meta.isAuth) { // 判斷是否需要權限
+                if (localStorage.getItem('level') === 'master') {
+                    next()
+                } else {
+                    console.log('權限不夠')
+                }
+            } else {
+                next()
+            }
+            
+        })
+
+        // 全局後置路由守衛，初始化的時候被調用、每次路由切換之後被調用
+        router.afterEach((to, from) => {
+            console.log('後置路由守衛', to, from)
+            document.title = to.meta.title || 'Vueture' // 修改網頁的 title
+        })
+4. 獨享守衛:
+5. 組件內守衛:
