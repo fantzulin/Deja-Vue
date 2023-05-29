@@ -865,3 +865,10 @@
             }
         }
 5. 組件內守衛:
+
+        // 進入守衛，通過路由規則，進入該組件時被調用
+        beforeRouteEnter (to, from, next) {
+        },
+        // 離開守衛，通過路由規則，離開該組件時被調用
+        beforeRouteLeave (to, from, next) {
+        }
