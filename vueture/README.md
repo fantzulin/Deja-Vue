@@ -851,4 +851,17 @@
             document.title = to.meta.title || 'Vueture' // 修改網頁的 title
         })
 4. 獨享守衛:
+
+        beforeEnter: (to, from, next) => {
+            console.log('前置路由守衛', to, from)
+            if (to.meta.isAuth) { // 判斷是否需要權限
+                if (localStorage.getItem('level') === 'master') {
+                    next()
+                } else {
+                    console.log('權限不夠')
+                }
+            } else {
+                next()
+            }
+        }
 5. 組件內守衛:
