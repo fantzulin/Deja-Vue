@@ -1,11 +1,11 @@
 # Vuenus
 
-1. Vue3 簡介
+## 1. Vue3 簡介
     - 2020 年 9 月 18 日，Vue.js 發布 3.0 版本，代號: One Piece(海賊王)
     - 耗時 2 年多、2600+ 次提交、30+ 個 RFC、600+ 次 PR、99 位貢獻者
-    - github 上的 tags 地址
+    - github 上的 [tags](https://github.com/vuejs/core/releases)
 
-2. Vue3 帶來了什麼
+## 2. Vue3 帶來了什麼
     1. 性能的提升
         - 打包大小減少 41%
         - 初次渲染快 55%，更新渲染快 133%
@@ -96,3 +96,18 @@ export default defineConfig({
 `npm run dev`
 
 成功運行專案
+## 二、常用 Composition API
+[官方文檔](https://cn.vuejs.org/guide/extras/composition-api-faq.html)
+### 1. 拉開序幕的 setup
+1. 理解: Vue3.0 中一個新的配置項，值為一個函數。
+2. setup 是所有 Composition API(組合 API)"表演的舞台"。
+3. 組件中所用到的: 數據、方法等等，均要配置在 setup 中。
+4. setup 函數的兩種返回值:
+    - 若返回一個對象，則對象中的屬性、方法，在模板中均可以直接使用。(重點關注!)
+    - 若返回一個渲染函數: 則可以自定義渲染內容。(了解)
+5. 注意點:
+    - 盡量不要與 Vue2.x 配置混用
+        - Vue2.x 配置(data、methods、computed...)中可以訪問到 setup 中的屬性、方法。
+        - 但在 setup 中不能訪問到  Vue2.x 配置(data、methods、computed...)。
+        - 如果有重名，setup 優先。
+    - setup 不能是一個 async 函數，因為返回值不再是 return 的對象，而是 promise，模板看不到 return 對象中屬性。(後期也可以返回一個 Promise 實例，但需要 Suspense 和異步組件的配合)
