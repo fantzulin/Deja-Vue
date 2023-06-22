@@ -43,6 +43,8 @@ npm run serve
     - 輕量快速的熱重載(HMR)。
     - 真正的按需編譯，不再等待整個應用編譯完成。
 - 傳統構建與 vite 構建對比圖
+![vite](https://github.com/fantzulin/Deja-Vue/assets/21350358/e9622723-cd01-4ead-99ff-5501a22bc150)
+
 #### 初次創建專案步驟及修復紀錄
 
 **Step1**
