@@ -1,25 +1,25 @@
 # Vuenus
 
 ## 1. Vue3 簡介
-    - 2020 年 9 月 18 日，Vue.js 發布 3.0 版本，代號: One Piece(海賊王)
-    - 耗時 2 年多、2600+ 次提交、30+ 個 RFC、600+ 次 PR、99 位貢獻者
-    - github 上的 [tags](https://github.com/vuejs/core/releases)
+- 2020 年 9 月 18 日，Vue.js 發布 3.0 版本，代號: One Piece(海賊王)
+- 耗時 2 年多、2600+ 次提交、30+ 個 RFC、600+ 次 PR、99 位貢獻者
+- github 上的 [tags](https://github.com/vuejs/core/releases)
 
 ## 2. Vue3 帶來了什麼
-    1. 性能的提升
-        - 打包大小減少 41%
-        - 初次渲染快 55%，更新渲染快 133%
-        - 內存減少 54%
-        ...
-    2. 源碼的升級
-        - 使用 Proxy 代替 defineProperty 實現響應式
-        - 重寫虛擬 DOM 的實現和 Tree-Shaking
-        ...
-    3. 其他改變
-        - 新的生命週期鉤子
-        - data 選項應始終被聲明為一個函數
-        - 移除 keyCode 支持作為 v-on 的修飾符
-        ...
+1. 性能的提升
+    - 打包大小減少 41%
+    - 初次渲染快 55%，更新渲染快 133%
+    - 內存減少 54%
+    - ...
+2. 源碼的升級
+    - 使用 Proxy 代替 defineProperty 實現響應式
+    - 重寫虛擬 DOM 的實現和 Tree-Shaking
+    - ...
+3. 其他改變
+    - 新的生命週期鉤子
+    - data 選項應始終被聲明為一個函數
+    - 移除 keyCode 支持作為 v-on 的修飾符
+    - ...
 
 ## 一、創建 Vue3.0 工程
 ### 1. 使用 vue-cli 創建
