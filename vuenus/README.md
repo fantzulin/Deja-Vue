@@ -111,3 +111,13 @@ export default defineConfig({
         - 但在 setup 中不能訪問到  Vue2.x 配置(data、methods、computed...)。
         - 如果有重名，setup 優先。
     - setup 不能是一個 async 函數，因為返回值不再是 return 的對象，而是 promise，模板看不到 return 對象中屬性。(後期也可以返回一個 Promise 實例，但需要 Suspense 和異步組件的配合)
+### 2. ref 函數
+- 作用: 定義一個響應式的數據
+- 語法: `const xxx = ref(initValue)`
+    - 創建一個包含響應式數據的**引用對象(reference 對象)**
+    - JS 中操作數據: `xxx.value`
+    - 模板中讀取數據: 不需要.value，直接: `<div>{{ xxx }}</div>`
+- 備註:
+    - 接收的數據可以是: 基本類型、也可以是對象類型。
+    - 基本類型的數據: 響應式依然是靠 `Object.defineProperty()` 的 `get` 與 `set` 完成的。
+    - 對象類型的數據: 內部 "求助" 了 Vue3.0 中的一個新函數 — `reactive` 函數。
