@@ -121,3 +121,9 @@ export default defineConfig({
     - 接收的數據可以是: 基本類型、也可以是對象類型。
     - 基本類型的數據: 響應式依然是靠 `Object.defineProperty()` 的 `get` 與 `set` 完成的。
     - 對象類型的數據: 內部 "求助" 了 Vue3.0 中的一個新函數 — `reactive` 函數。
+
+### 3. reactive 函數
+- 作用: 定義一個**對象類型**的響應式數據(基本類型不要用它，要用 `ref` 函數)
+- 語法: `const 代理對象 = reactive(源對象)` 接收一個對象(或數組)，返回一個**代理對象(Proxy 的實例對象，簡稱 proxy 對象)**
+- reactive 定義的響應式數據是 "深層次的"。
+- 內部基於 ES6 的 proxy 實現，通過代理對象操作源對象內部數據進行操作。
