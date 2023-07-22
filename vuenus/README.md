@@ -127,3 +127,44 @@ export default defineConfig({
 - 語法: `const 代理對象 = reactive(源對象)` 接收一個對象(或數組)，返回一個**代理對象(Proxy 的實例對象，簡稱 proxy 對象)**
 - reactive 定義的響應式數據是 "深層次的"。
 - 內部基於 ES6 的 proxy 實現，通過代理對象操作源對象內部數據進行操作。
+
+### 4. Vue3.0 中的響應式原理
+#### vue2.x 的響應式
+- 實現原理:
+    - 對象類型: 通過 `Object.defineProperty()` 對屬性的讀取、修改進行攔截(數據劫持)。
+    - 數組類型: 通過重寫更新數組的一系列方法來實現攔截。(對數組的變更方法進行了包裹)。
+    ```
+    Object.defineProperty(data, 'count, {
+        get() {},
+        set() {}
+    })
+    ```
+- 存在問題:
+    - 新增屬性、刪除屬性，介面不會更新。
+    - 直接通過下標修改數組，介面不會自動更新。
+
+#### vue3.0 的響應式
+- 實現原理:
+    - 通過 Proxy(代理): 攔截對象中任意屬性的變化，包括: 屬性值的讀寫、屬性的添加、屬性的刪除等。
+    - 通過 Reflect(反射): 對源對象的屬性進行操作。
+    - MDN文檔中描述的 Proxy 與 Reflect:
+        - [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy)
+        - [Reflect](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
+        ```
+        new Proxy(data, {
+            // 攔截讀取屬性值
+            get(target, prop) {
+                return Reflect.get(target, prop)
+            },
+            // 攔截設置屬性值或添加新屬性
+            set(target, prop, value) {
+                return Reflect.set(target, prop, value)
+            },
+            //攔截刪除屬性
+            deleteProperty(target, prop) {
+                return Reflect.deleteProperty(target, prop)
+            }
+        })
+
+        proxy.name = 'tom
+        ```

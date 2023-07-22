@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3的響應式原理</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 源數據
+        let person = {
+            name: 'Chris',
+            age: 29
+        }
+
+        // 模擬 Vue2 中實現響應式
+        /*
+        let p = {}
+        Object.defineProperty(p, 'name', {
+            configurable: true,
+            get() {
+                // 有人讀取 name 時調用
+                return person.name
+            },
+            set(value) {
+                // 有人修改 name 時調用
+                console.log('有人修改了 name 屬性，我發現了，我要去更新介面')
+                person.name = value
+            }
+        })
+        Object.defineProperty(p, 'age', {
+            get() {
+                // 有人讀取 age 時調用
+                return person.age
+            },
+            set(value) {
+                // 有人修改 age 時調用
+                console.log('有人修改了 age 屬性，我發現了，我要去更新介面')
+                person.age = value
+            }
+        })
+        */
+
+        // 模擬 Vue3 中實現響應式
+        
+        const p = new Proxy(person, {
+            // 有人讀取 p 的某個屬性時調用
+            get(target, propName) {
+                console.log(`有人讀取了 p 身上的 ${propName} 屬性`)
+                return Reflect.get(target, propName)
+            },
+            // 有人修改 p 的某個屬性時、或給 p 追加某個屬性時調用
+            set(target, propName, value) {
+                console.log(`有人修改了 p 身上的 ${propName} 屬性，我要去更新介面了`)
+                Reflect.set(target, propName, value)
+            },
+            // 有人刪除 p 的某個屬性時調用
+            deleteProperty(target, propName) {
+                console.log(`有人刪除了 p 身上的 ${propName} 屬性，我要去更新介面了`)
+                return Reflect.deleteProperty(target, propName)
+            }
+        })
+        
+
+        let obj = {
+            a: 1,
+            b: 2
+        }
+        // 通過 Object.defineProperty 去操作
+        /*
+        try {
+            Object.defineProperty(obj, 'c', {
+                get() {
+                    return 3
+                }
+            })
+            Object.defineProperty(obj, 'c', {
+                get() {
+                    return 4
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        */
+
+        // 通過 Reflect.defineProperty 去操作
+        /*
+        const x1 = Reflect.defineProperty(obj, 'c', {
+            get() {
+                return 3
+            }
+        })
+        console.log(x1)
+        const x2 = Reflect.defineProperty(obj, 'c', {
+            get() {
+                return 4
+            }
+        })
+        
+        if (x2) {
+            console.log('某某某操作成功了')
+        } else {
+            console.log('某某某操作失敗了')
+        }
+        */
+        //console.log('~~~')
+    </script>
+</body>
+</html>
