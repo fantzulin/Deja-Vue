@@ -166,5 +166,16 @@ export default defineConfig({
             }
         })
 
-        proxy.name = 'tom
+        proxy.name = 'tom'
         ```
+### 5. reactive 對比 ref
+- 從定義數據角度對比: 
+    - ref 用來定義: **基本類型數據。**
+    - reactive 用來定義: **對象 (或數組) 類型數據。**
+    - 備註: ref 也可以用來定義 **對象 (或數組) 類型數據**，它內部會自動通過 `reactive` 轉為 **代理對象**。
+- 從原理角度對比:
+    - ref 通過 `Object.defineProperty()` 的 `get` 與 `set` 來實現響應式(數據劫持)。
+    - reactive 通過使用 **Proxy** 來實現響應式(數據劫持)，並通過 **Reflect** 操作 **源對象** 內部的數據。
+- 從使用角度對比:
+    - ref 定義的數據: 操作數據 **需要** `.value`，讀取數據時模板中直接讀取 **不需要** `.value`。
+    - reactive 定義的數據: 操作數據與讀取數據: **均不需要** `.value`。
