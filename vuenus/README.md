@@ -179,3 +179,12 @@ export default defineConfig({
 - 從使用角度對比:
     - ref 定義的數據: 操作數據 **需要** `.value`，讀取數據時模板中直接讀取 **不需要** `.value`。
     - reactive 定義的數據: 操作數據與讀取數據: **均不需要** `.value`。
+### 6. setup 的兩個注意點
+- setup 執行的時機
+    - 在 beforeCreate之前執行一次，this 是 `undefined`。
+- setup 的參數
+    - props: 值為對象，包含: 組件外部傳遞過來，且組件內部聲明接收了的屬性。
+    - context: 上下文對象
+        - attrs: 值為對象，包含: 組件外部傳遞過來，但沒有在 props 配置中聲明的屬性，相當於 `this.$attrs`。
+        - slots: 收到的插槽內容，相當於 `this.$slot`。
+        - emit: 分發自定義事件的函數，相當於 `this.$emit`。
