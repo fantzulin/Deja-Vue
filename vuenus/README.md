@@ -188,3 +188,30 @@ export default defineConfig({
         - attrs: 值為對象，包含: 組件外部傳遞過來，但沒有在 props 配置中聲明的屬性，相當於 `this.$attrs`。
         - slots: 收到的插槽內容，相當於 `this.$slot`。
         - emit: 分發自定義事件的函數，相當於 `this.$emit`。
+### 7. 計算屬性與監視
+1. computed 函數
+    - 與 Vue2.x 中 computed 配置功能一致
+    - 寫法
+    ```
+    import { computed } from 'vue'
+    
+    setup() {
+        ...
+        // 計算屬性—簡寫
+        let fullName = computed(()=>{
+            return person.last_name + ',' + person.first_name
+        })
+        // 計算屬性—完整
+        let fullName = computed({
+            get() {
+                return person.last_name + ',' + person.first_name
+            },
+            set(value) {
+                const nameArr = value.split(',')
+                person.last_name = nameArr[0]
+                person.first_name = nameArr[1]
+            }
+        })
+    }
+
+    ```
