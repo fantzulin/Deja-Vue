@@ -213,5 +213,45 @@ export default defineConfig({
             }
         })
     }
+    ```
+2. watch 函數
+    - 與 Vue2.x 中 watch 配置功能一致
+    - 兩個小 "坑":
+        - 監視 reactive 定義的響應式數據時: oldValue 無法正確獲取、強制開啟了深度監視(deep 配置失效)。
+        - 監視 reactive 定義的響應式數據中某個屬性時: deep 配置有效。
+    ```
+    // 情況一: 監視 ref 所定義的一個響應式數據
+    watch(sum, (newValue, oldValue)=>{
+        console.log(`sum 變了, newValue: ${newValue}, oldValue: ${oldValue}`)
+    }, { immediate: true })
 
+    // 情況二: 監視 ref 所定義的多個響應式數據
+    watch([sum, msg], (newValue, oldValue)=>{
+        console.log(`sum 或 msg 變了, newValue: ${newValue}, oldValue: ${oldValue}`)
+    }, { immediate: true })
+
+    /*
+        情況三: 監視 reactive 所定義的一個響應式數據的全部屬性
+            1. 注意: 此處無法正確的獲取 oldValue
+            2. 注意: 強制開啟了深度監視 (deep 配置無效)
+    */
+    watch(person, (newValue, oldValue)=>{
+        console.log("person 變化了", newValue, oldValue)
+    }, { deep: false }) // 此處的 deep 配置無效
+
+    // 情況四: 監視 reactive 所定義的一個響應式數據中的某個數據
+    watch(()=>person.name, (newValue, oldValue)=>{
+        console.log("person 的 name 變化了", newValue, oldValue)
+    })
+
+    // 情況五: 監視 reactive 所定義的一個響應式數據中的某些數據
+    watch([()=>person.name, ()=>person.age], (newValue, oldValue)=>{
+        console.log("person 的 name 或 age 變化了", newValue, oldValue)
+    })
+
+    // 特殊情況
+    watch(()=>person.job, (newValue, oldValue)=>{
+        console.log("person 的 job 變化了", newValue, oldValue)
+    }, { deep: true }) // 此處由於監視的是 reactive 所定義的對象中的某個屬性，所以 deep 配置有效
+    
     ```
