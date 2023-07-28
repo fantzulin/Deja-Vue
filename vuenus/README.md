@@ -255,3 +255,17 @@ export default defineConfig({
     }, { deep: true }) // 此處由於監視的是 reactive 所定義的對象中的某個屬性，所以 deep 配置有效
     
     ```
+3. watchEffect 函數
+    - watch 的套路是: 既要指明監視的屬性，也要指明監視的回調。
+    - watchEffect 的套路是: 不用指明監視哪個屬性，監視的回調中用到哪個屬性，那就監視哪個屬性。
+    - watchEffect 有點像 computed:
+        - 但 computed 注重的計算出來的值(回調函數的返回值)，所以必須要寫返回值。
+        - 而 watchEffect 更注重的是過程(回調函數的函數體)，所以不用寫返回值。
+    ```
+    // watchEffect 所指定的回調中用到的數據只要發生變化，則直接重新執行回調。
+    watchEffect(()=>{
+        const x1 = sum.value
+        const x2 = person.job.first.salary
+        console.log("watchEffect 所指定的回調執行了")
+    })
+    ```
