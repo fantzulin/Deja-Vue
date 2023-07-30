@@ -271,3 +271,15 @@ export default defineConfig({
     ```
 ### 8. 生命週期
 ![lifecycle](https://github.com/fantzulin/Deja-Vue/assets/21350358/1ea60c98-964a-4178-a36b-c9eb0b485204)
+- Vue3.0 中可以繼續使用 Vue2.x 中的生命週期鉤子，但有兩個被更名:
+    - `beforeDestroy` 改名為 `beforeUnmount`
+    - `destroyed` 改名為 `unmounted`
+- Vue3.0 也提供了 Composition API 形式的生命週期鉤子，與 Vue2.x 中鉤子對應關係如下:
+    - `beforeCreate`  ===> `setup()`
+    - `created`       ===> `setup()`
+    - `beforeMount`   ===> `onBeforeMount`
+    - `mounted`       ===> `onMounted`
+    - `beforeUpdate`  ===> `onBeforeUpdate`
+    - `updated`       ===> `onUpdated`
+    - `beforeUnmount` ===> `onBeforeUnmount`
+    - `unmounted`     ===> `onUnmounted`
