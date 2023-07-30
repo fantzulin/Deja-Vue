@@ -270,3 +270,4 @@ export default defineConfig({
     })
     ```
 ### 8. 生命週期
+![lifecycle](https://github.com/fantzulin/Deja-Vue/assets/21350358/1ea60c98-964a-4178-a36b-c9eb0b485204)
