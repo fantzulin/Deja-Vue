@@ -269,3 +269,4 @@ export default defineConfig({
         console.log("watchEffect 所指定的回調執行了")
     })
     ```
+### 8. 生命週期
