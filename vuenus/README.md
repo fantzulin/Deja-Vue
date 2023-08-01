@@ -283,3 +283,7 @@ export default defineConfig({
     - `updated`       ===> `onUpdated`
     - `beforeUnmount` ===> `onBeforeUnmount`
     - `unmounted`     ===> `onUnmounted`
+### 9. 自定義 hook 函數
+- 什麼是 hook? — 本質是一個函數，把 setup 函數中使用的 Composition API 進行了封裝。
+- 類似於 vue2.x 中的 mixin
+- 自定義 hook 的優勢: 複用代碼，讓 setup 中的邏輯更清楚易懂。
